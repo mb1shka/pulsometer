@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_bpm/chart.dart';
 import 'package:heart_bpm/heart_bpm.dart';
-import 'package:heart_rate/shared_preferences/my_shared_preferences.dart';
+import 'package:heart_rate/domain/shared_preferences/my_shared_preferences.dart';
+import 'package:heart_rate/presentation/widgets/measurement_start_position.dart';
 
 class MeasurementPage extends StatefulWidget {
   const MeasurementPage({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
   late Widget dialog;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {/*
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -68,6 +69,36 @@ class _MeasurementPageState extends State<MeasurementPage> {
           ],
         ),
       ),
+    );*/
+    return SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          body: Center(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: MeasurementStart(),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                      child: Text("Press here to start"),
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                    shadowColor: MaterialStateProperty.all<Color>(Colors.deepPurple),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  ),
+              ],
+            ),
+          ),
+        ),
     );
   }
 }

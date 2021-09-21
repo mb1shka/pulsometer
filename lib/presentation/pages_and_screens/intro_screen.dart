@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_rate/domain/shared_preferences/my_shared_preferences.dart';
 import 'package:heart_rate/presentation/pages_and_screens/home_page.dart';
-import 'package:heart_rate/shared_preferences/my_shared_preferences.dart';
 
 class IntroScreen extends StatelessWidget {
   @override
