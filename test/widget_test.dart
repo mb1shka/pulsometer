@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:heart_rate/main.dart';
-import 'package:heart_rate/presentation/pages/home_page.dart';
 import 'package:heart_rate/presentation/pages_and_screens/home_page.dart';
 
 void main() {
