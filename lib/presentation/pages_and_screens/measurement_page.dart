@@ -2,8 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_bpm/chart.dart';
 import 'package:heart_bpm/heart_bpm.dart';
+import 'package:heart_rate/data/listeners/heart_rate_listener.dart';
 import 'package:heart_rate/domain/shared_preferences/my_shared_preferences.dart';
 import 'package:heart_rate/presentation/widgets/measurement_start_position.dart';
+
+
+import 'package:provider/provider.dart';
+
 
 class MeasurementPage extends StatefulWidget {
   const MeasurementPage({Key? key}) : super(key: key);
@@ -17,6 +22,11 @@ class _MeasurementPageState extends State<MeasurementPage> {
 
   bool isBPMEnabled = false;
   late Widget dialog;
+  int currentValue = 0;
+
+  void _measurement() {
+    context.read<HeartRateListener>().measurement();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,23 +40,36 @@ class _MeasurementPageState extends State<MeasurementPage> {
           body: Column(
             children: [
               isBPMEnabled
-                  ? dialog = HeartBPMDialog(
-                      context: context,
-                      onRawData: (value) {
-                        setState(() {
-                          if (data.length == 100) data.removeAt(0);
-                          data.add(value);
-                        });
-                        // chart = BPMChart(data);
-                      },
-                      onBPM: (value) {},
-                      // sampleDelay: 1000 ~/ 20,
-                      // child: Container(
-                      //   height: 50,
-                      //   width: 100,
-                      //   child: BPMChart(data),
-                      // ),
-                    )
+                  ? dialog = Column(
+                    children: [
+                      HeartBPMDialog(
+                          context: context,
+                          onRawData: (value) {
+                            setState(() {
+                              if (data.length == 100) data.removeAt(0);
+                              data.add(value);
+                            });
+                            // chart = BPMChart(data);
+                          },
+                          onBPM: (value) {
+                            setState(() {
+                              currentValue = value;
+                              HeartRateListener(currentValue: value);
+                              //TODO: неправильно работает. нужно понять, как передавать текущие данные пулса
+                            });
+                          },
+                          // sampleDelay: 1000 ~/ 20,
+                          // child: Container(
+                          //   height: 50,
+                          //   width: 100,
+                          //   child: BPMChart(data),
+                          // ),
+                        ),
+                      Center(
+                        child: Text("${context.watch<HeartRateListener>().getAVGRate}"),
+                      )
+                    ],
+                  )
                   : SizedBox(),
               Center(
                 child: ElevatedButton(
@@ -67,6 +90,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
                   onPressed: () => setState(() {
                     if (isBPMEnabled) {
                       isBPMEnabled = false;
+                      _measurement();
                       // dialog.
                     } else
                       isBPMEnabled = true;
