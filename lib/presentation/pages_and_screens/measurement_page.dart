@@ -19,58 +19,66 @@ class _MeasurementPageState extends State<MeasurementPage> {
   late Widget dialog;
 
   @override
-  Widget build(BuildContext context) {/*
+  Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Heart BPM Demo'),
-        ),
-        body: Column(
-          children: [
-            isBPMEnabled
-                ? dialog = HeartBPMDialog(
-                    context: context,
-                    onRawData: (value) {
-                      setState(() {
-                        if (data.length == 100) data.removeAt(0);
-                        data.add(value);
-                      });
-                      // chart = BPMChart(data);
-                    },
-                    onBPM: (value) {},
-                    // sampleDelay: 1000 ~/ 20,
-                    // child: Container(
-                    //   height: 50,
-                    //   width: 100,
-                    //   child: BPMChart(data),
-                    // ),
-                  )
-                : SizedBox(),
-            isBPMEnabled
-                ? Container(
-                    decoration: BoxDecoration(border: Border.all()),
-                    height: 150,
-                    child: BPMChart(data),
-                  )
-                : SizedBox(),
-            Center(
-              child: ElevatedButton.icon(
-                icon: Icon(Icons.favorite_rounded),
-                label: Text(isBPMEnabled ? "Stop measurement" : "Measure BPM"),
-                onPressed: () => setState(() {
-                  if (isBPMEnabled) {
-                    isBPMEnabled = false;
-                    // dialog.
-                  } else
-                    isBPMEnabled = true;
-                }),
+      child: MaterialApp(
+        title: 'Heart rate',
+        home: Scaffold(/*
+          appBar: AppBar(
+            title: Text('Heart BPM Demo'),
+          ),*/
+          body: Column(
+            children: [
+              isBPMEnabled
+                  ? dialog = HeartBPMDialog(
+                      context: context,
+                      onRawData: (value) {
+                        setState(() {
+                          if (data.length == 100) data.removeAt(0);
+                          data.add(value);
+                        });
+                        // chart = BPMChart(data);
+                      },
+                      onBPM: (value) {},
+                      // sampleDelay: 1000 ~/ 20,
+                      // child: Container(
+                      //   height: 50,
+                      //   width: 100,
+                      //   child: BPMChart(data),
+                      // ),
+                    )
+                  : SizedBox(),
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Color.fromRGBO(255, 106, 137, 1),
+                    fixedSize: Size(224, 46),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24.0),
+                    )
+                  ),
+                  child: Text(isBPMEnabled ? "Stop" : "Start",
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontStyle: FontStyle.normal,
+                      color: Colors.white,
+                    ),
+                  ),
+                  onPressed: () => setState(() {
+                    if (isBPMEnabled) {
+                      isBPMEnabled = false;
+                      // dialog.
+                    } else
+                      isBPMEnabled = true;
+                  }),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    );*/
-    return SafeArea(
+    );
+    /*return SafeArea(
         child: Scaffold(
           backgroundColor: Colors.black,
           body: Center(
@@ -99,6 +107,6 @@ class _MeasurementPageState extends State<MeasurementPage> {
             ),
           ),
         ),
-    );
+    );*/
   }
 }
