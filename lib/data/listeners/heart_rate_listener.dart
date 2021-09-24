@@ -20,13 +20,30 @@ class HeartRateListener with ChangeNotifier {
   // avgrate getter
 
   StreamSubscription? _timer;
-  StreamSubscription? _minuteTimer;
+  //Timer _minuteTimer;
+  //int _start = 60;
   final interval = const Duration(milliseconds: 1);
-  final minuteInterval = const Duration(minutes: 1, milliseconds: 2);
+  //final minuteInterval = const Duration(minutes: 1);
 
+  /*void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _minuteTimer = new Timer.periodic(
+      oneSec,
+          (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            _minuteTimer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }*/
 
   void measurement() {
-    _minuteTimer = Stream<void>.periodic(minuteInterval).listen((event) {
       _AVGRate = 0;
       counter = 1;
       _allCountedHeartRates = 0;
@@ -36,7 +53,6 @@ class HeartRateListener with ChangeNotifier {
         counter++;
         notifyListeners();
       });
-    });
     /*_AVGRate = 0;
     counter = 1;
     _allCountedHeartRates = 0;
@@ -46,5 +62,9 @@ class HeartRateListener with ChangeNotifier {
       counter++;
       notifyListeners();
     });*/
+  }
+
+  void measurementCancel() {
+    _timer!.cancel();
   }
 }

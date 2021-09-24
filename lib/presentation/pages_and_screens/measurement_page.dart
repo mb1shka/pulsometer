@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_bpm/chart.dart';
@@ -24,8 +26,23 @@ class _MeasurementPageState extends State<MeasurementPage> {
   late Widget dialog;
   int currentValue = 0;
 
+  late Timer _timer;
+  int _start = 10;
+
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+
   void _measurement() {
     context.read<HeartRateListener>().measurement();
+  }
+
+  void _measurementCancel() {
+    context.read<HeartRateListener>().measurementCancel();
   }
 
   @override
@@ -53,8 +70,10 @@ class _MeasurementPageState extends State<MeasurementPage> {
                           },
                           onBPM: (value) {
                             setState(() {
+                              print("new bpm value: $value");
                               currentValue = value;
-                              HeartRateListener(currentValue: value);
+                              heartRateCalculator.addValue(value);
+                              // HeartRateListener(currentValue: value);
                               //TODO: неправильно работает. нужно понять, как передавать текущие данные пулса
                             });
                           },
@@ -88,9 +107,29 @@ class _MeasurementPageState extends State<MeasurementPage> {
                     ),
                   ),
                   onPressed: () => setState(() {
+
+                    _measurement();
+
+                    //timer = 60 sec
                     if (isBPMEnabled) {
                       isBPMEnabled = false;
-                      _measurement();
+
+                      const oneSec = const Duration(seconds: 1);
+                      _timer = new Timer.periodic(
+                        oneSec,
+                            (Timer timer) {
+                          if (_start == 0) {
+                            setState(() {
+                              timer.cancel();
+                              _measurementCancel();
+                            });
+                          } else {
+                            setState(() {
+                              _start--;
+                            });
+                          }
+                        },
+                      );
                       // dialog.
                     } else
                       isBPMEnabled = true;
