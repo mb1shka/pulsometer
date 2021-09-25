@@ -36,17 +36,18 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    /*return MultiProvider(
       providers: [
         ChangeNotifierProvider<HeartRateListener>(
             create: (context) => HeartRateListener()),
-      ],
-      child: MaterialApp(
+      ],*/
+      //child:
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         //TODO: to know, what IS it
         title: 'Heart rate app',
         home: isFirstRun ? HomePage() : IntroScreen(),
-      ),
+      //),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:heart_bpm/chart.dart';
 import 'package:heart_bpm/heart_bpm.dart';
 import 'package:heart_rate/data/listeners/heart_rate_listener.dart';
+import 'package:heart_rate/domain/heart_rate_calculator.dart';
 import 'package:heart_rate/domain/shared_preferences/my_shared_preferences.dart';
 import 'package:heart_rate/presentation/widgets/measurement_start_position.dart';
 
@@ -19,15 +20,17 @@ class MeasurementPage extends StatefulWidget {
 }
 
 class _MeasurementPageState extends State<MeasurementPage> {
+  HeartRateCalculator _heartRateCalculator = new HeartRateCalculator();
   List<SensorValue> data = [];
   //Widget chart = BPMChart(data);
 
   bool isBPMEnabled = false;
   late Widget dialog;
   int currentValue = 0;
+  int middleValue = 0;
 
   late Timer _timer;
-  int _start = 10;
+  int _start = 60;
 
 
   @override
@@ -37,13 +40,13 @@ class _MeasurementPageState extends State<MeasurementPage> {
   }
 
 
-  void _measurement() {
+  /*void _measurement() {
     context.read<HeartRateListener>().measurement();
   }
 
   void _measurementCancel() {
     context.read<HeartRateListener>().measurementCancel();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -70,11 +73,11 @@ class _MeasurementPageState extends State<MeasurementPage> {
                           },
                           onBPM: (value) {
                             setState(() {
-                              print("new bpm value: $value");
+                              //print("new bpm value: $value");
                               currentValue = value;
-                              heartRateCalculator.addValue(value);
+                              //_heartRateCalculator.addValue(value);
+                              //TODO: точно ли этот метод должен быть здесь?
                               // HeartRateListener(currentValue: value);
-                              //TODO: неправильно работает. нужно понять, как передавать текущие данные пулса
                             });
                           },
                           // sampleDelay: 1000 ~/ 20,
@@ -84,9 +87,6 @@ class _MeasurementPageState extends State<MeasurementPage> {
                           //   child: BPMChart(data),
                           // ),
                         ),
-                      Center(
-                        child: Text("${context.watch<HeartRateListener>().getAVGRate}"),
-                      )
                     ],
                   )
                   : SizedBox(),
@@ -108,34 +108,44 @@ class _MeasurementPageState extends State<MeasurementPage> {
                   ),
                   onPressed: () => setState(() {
 
-                    _measurement();
+                    //_measurement();
 
                     //timer = 60 sec
                     if (isBPMEnabled) {
                       isBPMEnabled = false;
-
-                      const oneSec = const Duration(seconds: 1);
-                      _timer = new Timer.periodic(
-                        oneSec,
-                            (Timer timer) {
-                          if (_start == 0) {
-                            setState(() {
-                              timer.cancel();
-                              _measurementCancel();
-                            });
-                          } else {
-                            setState(() {
-                              _start--;
-                            });
-                          }
-                        },
-                      );
                       // dialog.
                     } else
                       isBPMEnabled = true;
+
+                    const oneSec = const Duration(seconds: 1);
+                    _timer = new Timer.periodic(
+                      oneSec,
+                          (Timer timer) {
+                        if (_start == 0) {
+                          setState(() {
+                            middleValue = _heartRateCalculator.calculate();
+                            _heartRateCalculator.cleanList();
+                            timer.cancel();
+                            //_measurementCancel();
+                          });
+                        } else {
+                          setState(() {
+                            _heartRateCalculator.addValue(currentValue);
+                            _start--;
+                          });
+                        }
+                      },
+                    );
                   }),
                 ),
               ),
+              Center(
+                child: Text('Time left: $_start'),
+              ),
+              Center(
+                //child: Text("${context.watch<HeartRateListener>().getAVGRate}"),
+                child: Text("Middle value is: $middleValue"),
+              )
             ],
           ),
         ),

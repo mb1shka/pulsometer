@@ -1,3 +1,4 @@
+/*
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
@@ -25,7 +26,8 @@ class HeartRateListener with ChangeNotifier {
   final interval = const Duration(milliseconds: 1);
   //final minuteInterval = const Duration(minutes: 1);
 
-  /*void startTimer() {
+  */
+/*void startTimer() {
     const oneSec = const Duration(seconds: 1);
     _minuteTimer = new Timer.periodic(
       oneSec,
@@ -41,7 +43,8 @@ class HeartRateListener with ChangeNotifier {
         }
       },
     );
-  }*/
+  }*//*
+
 
   void measurement() {
       _AVGRate = 0;
@@ -53,7 +56,8 @@ class HeartRateListener with ChangeNotifier {
         counter++;
         notifyListeners();
       });
-    /*_AVGRate = 0;
+    */
+/*_AVGRate = 0;
     counter = 1;
     _allCountedHeartRates = 0;
     _timer = Stream<void>.periodic(interval).listen((event) {
@@ -61,10 +65,11 @@ class HeartRateListener with ChangeNotifier {
       _AVGRate = (_allCountedHeartRates / counter) as int;
       counter++;
       notifyListeners();
-    });*/
+    });*//*
+
   }
 
   void measurementCancel() {
     _timer!.cancel();
   }
-}
+}*/
