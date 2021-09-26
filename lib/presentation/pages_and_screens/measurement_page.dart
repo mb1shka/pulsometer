@@ -35,7 +35,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    // _timer.cancel(); // проверить задан ли таймер
     super.dispose();
   }
 
@@ -51,12 +51,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: MaterialApp(
-        title: 'Heart rate',
-        home: Scaffold(/*
-          appBar: AppBar(
-            title: Text('Heart BPM Demo'),
-          ),*/
+      child: Scaffold(
           body: Column(
             children: [
               isBPMEnabled
@@ -149,7 +144,6 @@ class _MeasurementPageState extends State<MeasurementPage> {
             ],
           ),
         ),
-      ),
     );
     /*return SafeArea(
         child: Scaffold(

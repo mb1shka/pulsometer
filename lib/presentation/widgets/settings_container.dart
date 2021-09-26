@@ -9,8 +9,7 @@ class SettingsContainer extends StatefulWidget {
 class _SettingsContainerState extends State<SettingsContainer> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text("Settings",
             style: TextStyle(
@@ -70,7 +69,6 @@ class _SettingsContainerState extends State<SettingsContainer> {
             ),
           ),
         ]),
-      ),
     );
   }
 }
