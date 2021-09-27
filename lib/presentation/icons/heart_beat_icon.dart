@@ -9,7 +9,7 @@
 ///   fonts:
 ///    - family:  CastomIcons
 ///      fonts:
-///       - asset: fonts/CastomIcons.ttf
+///       - asset: fonts/CustomIcons.ttf
 ///
 /// 
 /// * Font Awesome 4, Copyright (C) 2016 by Dave Gandy

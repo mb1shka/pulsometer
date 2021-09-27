@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_rate/custom_icons.dart';
 import 'package:heart_rate/presentation/icons/heart_beat_icon.dart';
 import 'package:heart_rate/presentation/pages_and_screens/measurement_page.dart';
 import 'package:heart_rate/presentation/pages_and_screens/settings_page.dart';
@@ -24,84 +25,36 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: const Color(0xFF1c1c1e),
+          backgroundColor: const Color(0xFFFFFFFF),
           elevation: 0,
           selectedFontSize: 10,
           unselectedFontSize: 10,
+          fixedColor: new Color(0xFFFF6A89),
           items: [
             BottomNavigationBarItem(
               icon: Icon(
-                HeartBeatIcon.heartbeat_1,
+                CustomIcons.tab_heart
               ),
-              label: 'Measurement',
+              label: ' ',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.equalizer_outlined),
-              label: 'Statistics',
+              icon: Icon(
+                CustomIcons.tab_statistics
+              ),
+              label: ' ',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
+              icon: Icon(
+                  CustomIcons.tab_settings
+              ),
+              label: ' ',
             ),
           ],
           currentIndex: _selectedIndex,
           onTap: (int index) => setState(() => _selectedIndex = index),
       ),
       body: tabs.elementAt(_selectedIndex),
-      // child: CupertinoApp(
-      //   title: 'Heart rate app',
-      //   home: CupertinoTabScaffold(
-      //       tabBar: CupertinoTabBar(
-      //         currentIndex: _currentIndex,
-      //         onTap: _onItemTapped,
-      //         items: [
-      //           BottomNavigationBarItem(
-      //             icon: Icon(
-      //               HeartBeatIcon.heartbeat_1,
-      //             ),
-      //             label: 'Measurement',
-      //           ),
-      //           BottomNavigationBarItem(
-      //             icon: Icon(Icons.equalizer_outlined),
-      //             label: 'Statistics',
-      //           ),
-      //           BottomNavigationBarItem(
-      //             icon: Icon(Icons.settings),
-      //             label: 'Settings',
-      //           ),
-      //         ],
-      //       ),
-      //       tabBuilder: (BuildContext context, index) {
-      //         return _widgetOptions[index];
-      //       }),
-      // ),
+
     );
-    /*return CupertinoApp(
-      title: 'Heart rate app',
-      home: CupertinoTabScaffold(
-          tabBar: CupertinoTabBar(
-            currentIndex: _currentIndex,
-            onTap: _onItemTapped,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(
-                  HeartBeatIcon.heartbeat_1,
-                ),
-                label: 'Measurement',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.equalizer_outlined),
-                label: 'Statistics',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: 'Settings',
-              ),
-            ],
-          ),
-          tabBuilder: (BuildContext context, index) {
-            return _widgetOptions[index];
-          }),
-    );*/
   }
 }
