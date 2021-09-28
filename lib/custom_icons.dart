@@ -25,4 +25,8 @@ class CustomIcons {
   static const IconData info = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData tab_settings = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData tab_statistics = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData cross_icon = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData disclosure = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData privacy = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData group = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
