@@ -8,6 +8,8 @@ import 'package:heart_rate/custom_icons.dart';
 import 'package:heart_rate/data/listeners/heart_rate_listener.dart';
 import 'package:heart_rate/domain/heart_rate_calculator.dart';
 import 'package:heart_rate/domain/shared_preferences/my_shared_preferences.dart';
+import 'package:heart_rate/presentation/pages_and_screens/home_page.dart';
+import 'package:heart_rate/presentation/pages_and_screens/result_screen.dart';
 import 'package:heart_rate/presentation/widgets/measurement_start_position.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -24,10 +26,17 @@ class _MeasurementPageState extends State<MeasurementPage> {
   List<SensorValue> data = [];
   //Widget chart = BPMChart(data);
 
+  String btnText = "Start";
   bool isBPMEnabled = false;
+  var btnTextColor = Color.fromRGBO(255, 255, 255, 1);
   late Widget dialog;
   int currentValue = 0;
   int middleValue = 0;
+
+  bool _isDisable = false;
+
+  bool _toMeasure = true;
+  bool _toRestart = false;
 
   late Timer _timer;
   int _start = 60;
@@ -87,13 +96,13 @@ class _MeasurementPageState extends State<MeasurementPage> {
                           SvgPicture.asset('assets/svg/measurement_second.svg'),
                     ),
                   ),
-                    Text(
-                      '$currentValue BPM',
-                      style: TextStyle(
-                        color: new Color(0xFFFF6A89),
-                        fontSize: 48,
-                      ),
+                  Text(
+                    '$currentValue BPM',
+                    style: TextStyle(
+                      color: new Color(0xFFFF6A89),
+                      fontSize: 48,
                     ),
+                  ),
                 ],
               ),
             ),
@@ -130,52 +139,115 @@ class _MeasurementPageState extends State<MeasurementPage> {
                 : SizedBox(),
             Center(
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(255, 106, 137, 1),
-                    fixedSize: Size(224, 46),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24.0),
-                    )),
+                /*style: ElevatedButton.styleFrom(
+                     primary: _isDisable? Color.fromRGBO(255, 241, 243, 1) : Color.fromRGBO(255, 106, 137, 1),
+                     fixedSize: Size(224, 46),
+                     shape: RoundedRectangleBorder(
+                       borderRadius: BorderRadius.circular(24.0),
+                     )),*/
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled))
+                          return Color.fromRGBO(255, 241, 243, 1);
+                        return Color.fromRGBO(255, 106, 137, 1);
+                      },
+                    ),
+                    fixedSize: MaterialStateProperty.resolveWith<Size>(
+                      (states) => Size(224, 46),
+                    ),
+                    foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                      // if (states.contains(MaterialState.disabled))
+                      //   return Color.fromRGBO(255, 255, 255, 1);
+                      return Color.fromRGBO(255, 106, 137, 1);
+                    }),
+                    shape: MaterialStateProperty.resolveWith<
+                        RoundedRectangleBorder>((Set<MaterialState> states) {
+                      return RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.0),
+                      );
+                    })),
                 child: Text(
-                  isBPMEnabled ? "Stop" : "Start",
+                  btnText,
                   style: TextStyle(
                     fontSize: 17,
                     fontStyle: FontStyle.normal,
-                    color: Colors.white,
+                    color: btnTextColor,
                   ),
                 ),
-                onPressed: () => setState(() {
-                  //_measurement();
+                onPressed: _isDisable
+                    ? null
+                    : _toMeasure
+                        ? () => setState(() {
+                              //_measurement();
+                              _isDisable = true;
 
-                  //timer = 60 sec
-                  if (isBPMEnabled) {
-                    isBPMEnabled = false;
-                    // dialog.
-                  } else
-                    isBPMEnabled = true;
+                              //timer = 60 sec
+                              if (isBPMEnabled) {
+                                isBPMEnabled = false;
+                                // dialog.
+                              } else
+                                isBPMEnabled = true;
 
-                  const oneSec = const Duration(seconds: 1);
-                  _timer = new Timer.periodic(
-                    oneSec,
-                    (Timer timer) {
-                      if (_start == 0) {
-                        setState(() {
-                          middleValue = _heartRateCalculator.calculate();
-                          _heartRateCalculator.cleanList();
-                          timer.cancel();
-                          //_measurementCancel();
-                        });
-                      } else {
-                        setState(() {
-                          _heartRateCalculator.addValue(currentValue);
-                          _start--;
-                        });
-                      }
-                    },
-                  );
-                }),
+                              const oneSec = const Duration(seconds: 1);
+                              _timer = new Timer.periodic(
+                                oneSec,
+                                (Timer timer) {
+                                  if (_start == 0) {
+                                    setState(() {
+                                      middleValue =
+                                          _heartRateCalculator.calculate();
+                                      _heartRateCalculator.cleanList();
+                                      timer.cancel();
+                                      isBPMEnabled = false;
+                                      _toMeasure = false;
+                                      _isDisable = false;
+                                      _toRestart = true;
+                                      btnText = "Save measurement";
+                                      btnTextColor =
+                                          Color.fromRGBO(255, 255, 255, 1);
+                                      //_measurementCancel();
+                                    });
+                                  } else {
+                                    btnTextColor =
+                                        Color.fromRGBO(255, 106, 137, 1);
+                                    setState(() {
+                                      _heartRateCalculator
+                                          .addValue(currentValue);
+                                      _start--;
+                                      btnText = "$_start sec left";
+                                    });
+                                  }
+                                },
+                              );
+                            })
+                        : () => Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (_) => ResultScreen()),
+                            ),
               ),
             ),
+            _toRestart ? Center(
+              child: ElevatedButton(
+                onPressed: () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => HomePage()),
+                ),
+                child: Text('Restart',
+                  style: TextStyle(
+                    color: Color.fromRGBO(255, 106, 137, 1),
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromRGBO(255, 255, 255, 1),
+                  /*fixedSize: Size(224, 46),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24.0),
+                  ),*/
+                ),
+              ),
+            ) : SizedBox(),
             Center(
               child: Text('Time left: $_start'),
             ),
