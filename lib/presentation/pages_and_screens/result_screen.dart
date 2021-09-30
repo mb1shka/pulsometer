@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,6 +8,11 @@ import 'package:heart_rate/data/model/measurement.dart';
 import 'package:heart_rate/data/model/status.dart';
 import 'package:heart_rate/presentation/pages_and_screens/home_page.dart';
 import 'package:heart_rate/presentation/pages_and_screens/statistics_page.dart';
+import 'package:heart_rate/presentation/widgets/chip_painter.dart';
+import 'package:heart_rate/presentation/widgets/choice_chips.dart';
+import 'package:heart_rate/presentation/widgets/choice_chips_data.dart';
+import 'package:heart_rate/presentation/widgets/scrollable_single_chip.dart';
+import 'package:path/path.dart';
 
 import '../../custom_icons.dart';
 
@@ -26,15 +33,75 @@ class _ResultScreenState extends State<ResultScreen> {
   final DateTime dateTime = DateTime.now();
   late final int BPM;
 
+  int index = 3;
+  final double spacing = 8;
+
+  Color lightPink = new Color(0xFFFFF1F3);
+
+  Color pink = new Color(0xFFFF6A89);
+  Color textColor = new Color(0xFFFF6A89);
+
+  bool _useChisel = false;
+
   _ResultScreenState({
     required this.BPM,
   });
 
-  /*_ResultScreenState(int BPM) :
-    _currentMeasurement = new Measurement(BPM: BPM, comment: '', dateTime: new DateTime.now(), status: Status.Normal);*/
+  List<ChoiceChipData> choiceChips = ChoiceChips.all;
+
+  Widget buildChoiceChips() => Wrap(
+    runSpacing: spacing,
+    spacing: spacing,
+    children: choiceChips
+        .map((choiceChip) => ChoiceChip(
+      label: Text(choiceChip.label),
+      labelStyle: TextStyle(
+          fontWeight: FontWeight.bold, color: textColor),
+      onSelected: (isSelected) => setState(() {
+        choiceChips = choiceChips.map((otherChip) {
+          final newChip = otherChip.copy(isSelected: false);
+          return choiceChip == newChip
+              ? newChip.copy(isSelected: isSelected)
+              : newChip;
+        }).toList();
+      }),
+      selected: choiceChip.isSelected,
+      selectedColor: pink,
+      backgroundColor: lightPink,
+    ))
+        .toList(),
+  );
+
+
+  /* Widget choiceChips() {
+    return Expanded(
+        child: ListView.builder(
+          itemCount: _choices.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ChoiceChip(
+              label: Text(_choices[index]),
+              selected: _defaultChoiceIndex == index,
+              selectedColor: pink,
+              onSelected: (bool selected) {
+                setState(() {
+                  _defaultChoiceIndex = selected ? index : 0;
+                });
+              },
+              backgroundColor: lightPink,
+              labelStyle: TextStyle(
+                color: lightPink,
+              )
+            );
+          },
+        ),
+    );
+  }*/
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width - 32;
+
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: new Color(0xFFFFFFFF),
@@ -70,12 +137,13 @@ class _ResultScreenState extends State<ResultScreen> {
               alignment: Alignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 50.0),
+                  padding: EdgeInsets.fromLTRB(0, 50, 0, 50),
                   child: SvgPicture.asset('assets/svg/measurement_second.svg'),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
-                  child: Text('$BPM  BPM',
+                  padding: EdgeInsets.fromLTRB(0, 50, 0, 50),
+                  child: Text(
+                    '$BPM  BPM',
                     style: TextStyle(
                       color: new Color(0xFFFF6A89),
                       fontSize: 48,
@@ -84,6 +152,82 @@ class _ResultScreenState extends State<ResultScreen> {
                 ),
               ],
             ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                //child: Container(
+                  /*width: MediaQuery.of(context).size.width - 32,
+                  height: 122,*/
+                  child: Stack(
+                    children: [
+                      CustomPaint(
+                        size: Size(width, 122),
+                        painter: ChipPainter(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 0, 24),
+                        child: Text('What is your current status?',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                      /*Chip(
+                        label: Text('Rest'),
+                        labelPadding: EdgeInsets.fromLTRB(24, 13, 24, 13),
+                        backgroundColor: ,
+                      ),*/
+                      /*ChoiceChip(
+                          label: Text('Rest'),
+                          selected: _useChisel,
+                          selectedColor: pink,
+                          onSelected: (bool newValue) {
+                            setState(() {
+                              _useChisel = newValue;
+                            });
+                          },
+                          backgroundColor: lightPink,
+                          labelStyle: TextStyle(
+                            color: lightPink,
+                          ),
+                      ),*/
+                      Padding(
+                        padding: const EdgeInsets.all(60.0),
+                        child: buildChoiceChips(),
+                      ),
+                    ],
+                  ),
+                //),
+              ),
+            ),
+            /*Padding(
+              padding: const EdgeInsets.only(top: 50),
+              *//*child: ScrollableSingleChip(),*//*
+              //child: Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: _choices.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ChoiceChip(
+                    label: Text(_choices[index]),
+                    selected: _defaultChoiceIndex == index,
+                    selectedColor: pink,
+                    onSelected: (bool selected) {
+                      setState(() {
+                        _defaultChoiceIndex = selected ? index : 0;
+                      });
+                    },
+                    backgroundColor: lightPink,
+                    labelStyle: TextStyle(
+                      color: lightPink,
+                    ),
+                  );
+                },
+              ),
+              //),
+            ),*/
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -108,8 +252,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       comment: comment,
                       dateTime: dateTime));
                   Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => HomePage()));
+                      context, MaterialPageRoute(builder: (_) => HomePage()));
                 },
               ),
             ),
