@@ -28,7 +28,7 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   //final Measurement _currentMeasurement;
   final String comment = " ";
-  final Status status = Status.Normal;
+  Status status = Status.Normal;
   final DateTime dateTime = DateTime.now();
   late final int BPM;
 
@@ -122,7 +122,127 @@ class _ResultScreenState extends State<ResultScreen> {
                           ),
                         ),
                       ),
-
+                      Padding(
+                        padding: const EdgeInsets.only(top: 60),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
+                              child: ElevatedButton(
+                                onPressed: _isRestDisable
+                                    ? null
+                                    : () => setState(() {
+                                  _isRestDisable = true;
+                                  _isNormalDisable = false;
+                                  _isActiveDisable = false;
+                                  status = Status.Rest;
+                                }),
+                                child: Text('Rest'),
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                          (Set<MaterialState> states) {
+                                        if (states.contains(MaterialState.disabled))
+                                          return Color.fromRGBO(255, 106, 137, 1);
+                                        return Color.fromRGBO(255, 241, 243, 1);
+                                      },
+                                    ),
+                                    fixedSize: MaterialStateProperty.resolveWith<Size>(
+                                          (states) => Size(85, 46),
+                                    ),
+                                    foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                                            (Set<MaterialState> states) {
+                                          if (states.contains(MaterialState.disabled))
+                                            return Color.fromRGBO(255, 255, 255, 1);
+                                          return Color.fromRGBO(255, 106, 137, 1);
+                                        }),
+                                    shape: MaterialStateProperty.resolveWith<
+                                        RoundedRectangleBorder>((Set<MaterialState> states) {
+                                      return RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(24.0),
+                                      );
+                                    })
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                              child: ElevatedButton(
+                                onPressed: _isNormalDisable
+                                    ? null
+                                    : () => setState(() {
+                                  _isRestDisable = false;
+                                  _isNormalDisable = true;
+                                  _isActiveDisable = false;
+                                  status = Status.Normal;
+                                }),
+                                child: Text('Normal'),
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                          (Set<MaterialState> states) {
+                                        if (states.contains(MaterialState.disabled))
+                                          return Color.fromRGBO(255, 106, 137, 1);
+                                        return Color.fromRGBO(255, 241, 243, 1);
+                                      },
+                                    ),
+                                    fixedSize: MaterialStateProperty.resolveWith<Size>(
+                                          (states) => Size(108, 46),
+                                    ),
+                                    foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                                            (Set<MaterialState> states) {
+                                          if (states.contains(MaterialState.disabled))
+                                            return Color.fromRGBO(255, 255, 255, 1);
+                                          return Color.fromRGBO(255, 106, 137, 1);
+                                        }),
+                                    shape: MaterialStateProperty.resolveWith<
+                                        RoundedRectangleBorder>((Set<MaterialState> states) {
+                                      return RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(24.0),
+                                      );
+                                    })
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                              child: ElevatedButton(
+                                onPressed: _isActiveDisable
+                                    ? null
+                                    : () => setState(() {
+                                  _isRestDisable = false;
+                                  _isNormalDisable = false;
+                                  _isActiveDisable = true;
+                                  status = Status.Active;
+                                }),
+                                child: Text('Active'),
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                          (Set<MaterialState> states) {
+                                        if (states.contains(MaterialState.disabled))
+                                          return Color.fromRGBO(255, 106, 137, 1);
+                                        return Color.fromRGBO(255, 241, 243, 1);
+                                      },
+                                    ),
+                                    fixedSize: MaterialStateProperty.resolveWith<Size>(
+                                          (states) => Size(100, 46),
+                                    ),
+                                    foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                                            (Set<MaterialState> states) {
+                                          if (states.contains(MaterialState.disabled))
+                                            return Color.fromRGBO(255, 255, 255, 1);
+                                          return Color.fromRGBO(255, 106, 137, 1);
+                                        }),
+                                    shape: MaterialStateProperty.resolveWith<
+                                        RoundedRectangleBorder>((Set<MaterialState> states) {
+                                      return RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(24.0),
+                                      );
+                                    })
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 //),
@@ -155,86 +275,6 @@ class _ResultScreenState extends State<ResultScreen> {
                       context, MaterialPageRoute(builder: (_) => HomePage()));
                 },
               ),
-            ),
-
-            Row(
-              children: [
-                ElevatedButton(
-                    onPressed: _isRestDisable
-                    ? null
-                    : () => setState(() {
-                      _isRestDisable = true;
-                      _isNormalDisable = false;
-                      _isActiveDisable = false;
-                    }),
-                    child: Text('Rest'),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.disabled))
-                          return Color.fromRGBO(255, 106, 137, 1);
-                        return Color.fromRGBO(255, 241, 243, 1);
-                      },
-                    ),
-                    foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                           if (states.contains(MaterialState.disabled))
-                             return Color.fromRGBO(255, 255, 255, 1);
-                          return Color.fromRGBO(255, 106, 137, 1);
-                        }),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: _isNormalDisable
-                      ? null
-                      : () => setState(() {
-                        _isRestDisable = false;
-                        _isNormalDisable = true;
-                        _isActiveDisable = false;
-                  }),
-                  child: Text('Normal'),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.disabled))
-                          return Color.fromRGBO(255, 106, 137, 1);
-                        return Color.fromRGBO(255, 241, 243, 1);
-                      },
-                    ),
-                    foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                           if (states.contains(MaterialState.disabled))
-                             return Color.fromRGBO(255, 255, 255, 1);
-                          return Color.fromRGBO(255, 106, 137, 1);
-                        }),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: _isActiveDisable
-                      ? null
-                      : () => setState(() {
-                        _isRestDisable = false;
-                        _isNormalDisable = false;
-                        _isActiveDisable = true;
-                  }),
-                  child: Text('Active'),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.disabled))
-                          return Color.fromRGBO(255, 106, 137, 1);
-                        return Color.fromRGBO(255, 241, 243, 1);
-                      },
-                    ),
-                    foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                           if (states.contains(MaterialState.disabled))
-                             return Color.fromRGBO(255, 255, 255, 1);
-                          return Color.fromRGBO(255, 106, 137, 1);
-                        }),
-                  ),
-                ),
-              ],
             ),
           ],
         ),
