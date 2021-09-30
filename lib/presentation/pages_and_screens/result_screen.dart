@@ -33,8 +33,8 @@ class _ResultScreenState extends State<ResultScreen> {
   late final int BPM;
 
   Color lightPink = new Color(0xFFFFF1F3);
-
   Color pink = new Color(0xFFFF6A89);
+
 
   _ResultScreenState({
     required this.BPM,

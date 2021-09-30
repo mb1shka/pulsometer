@@ -10,8 +10,10 @@ import 'package:heart_rate/domain/heart_rate_calculator.dart';
 import 'package:heart_rate/domain/shared_preferences/my_shared_preferences.dart';
 import 'package:heart_rate/presentation/pages_and_screens/home_page.dart';
 import 'package:heart_rate/presentation/pages_and_screens/result_screen.dart';
+import 'package:heart_rate/presentation/widgets/custom_dialog_box.dart';
 import 'package:heart_rate/presentation/widgets/measurement_start_position.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:heart_rate/presentation/widgets/custom_dialog_box.dart';
 
 import 'package:provider/provider.dart';
 
@@ -69,8 +71,14 @@ class _MeasurementPageState extends State<MeasurementPage> {
           ),
           actions: [
             IconButton(
-                onPressed: () {},
-                //TODO: make a showDialog how to use
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomDialogBox();
+                      }
+                  );
+                },
                 icon: Icon(
                   CustomIcons.info,
                 )),
