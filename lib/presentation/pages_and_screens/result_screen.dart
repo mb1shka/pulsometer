@@ -11,7 +11,6 @@ import 'package:heart_rate/presentation/pages_and_screens/statistics_page.dart';
 import 'package:heart_rate/presentation/widgets/chip_painter.dart';
 import 'package:heart_rate/presentation/widgets/choice_chips.dart';
 import 'package:heart_rate/presentation/widgets/choice_chips_data.dart';
-import 'package:heart_rate/presentation/widgets/scrollable_single_chip.dart';
 import 'package:path/path.dart';
 
 import '../../custom_icons.dart';
@@ -33,69 +32,19 @@ class _ResultScreenState extends State<ResultScreen> {
   final DateTime dateTime = DateTime.now();
   late final int BPM;
 
-  int index = 3;
-  final double spacing = 8;
-
   Color lightPink = new Color(0xFFFFF1F3);
 
   Color pink = new Color(0xFFFF6A89);
-  Color textColor = new Color(0xFFFF6A89);
-
-  bool _useChisel = false;
 
   _ResultScreenState({
     required this.BPM,
   });
 
-  List<ChoiceChipData> choiceChips = ChoiceChips.all;
-
-  Widget buildChoiceChips() => Wrap(
-    runSpacing: spacing,
-    spacing: spacing,
-    children: choiceChips
-        .map((choiceChip) => ChoiceChip(
-      label: Text(choiceChip.label),
-      labelStyle: TextStyle(
-          fontWeight: FontWeight.bold, color: textColor),
-      onSelected: (isSelected) => setState(() {
-        choiceChips = choiceChips.map((otherChip) {
-          final newChip = otherChip.copy(isSelected: false);
-          return choiceChip == newChip
-              ? newChip.copy(isSelected: isSelected)
-              : newChip;
-        }).toList();
-      }),
-      selected: choiceChip.isSelected,
-      selectedColor: pink,
-      backgroundColor: lightPink,
-    ))
-        .toList(),
-  );
+  bool _isRestDisable = false;
+  bool _isNormalDisable = false;
+  bool _isActiveDisable = false;
 
 
-  /* Widget choiceChips() {
-    return Expanded(
-        child: ListView.builder(
-          itemCount: _choices.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ChoiceChip(
-              label: Text(_choices[index]),
-              selected: _defaultChoiceIndex == index,
-              selectedColor: pink,
-              onSelected: (bool selected) {
-                setState(() {
-                  _defaultChoiceIndex = selected ? index : 0;
-                });
-              },
-              backgroundColor: lightPink,
-              labelStyle: TextStyle(
-                color: lightPink,
-              )
-            );
-          },
-        ),
-    );
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -173,61 +122,12 @@ class _ResultScreenState extends State<ResultScreen> {
                           ),
                         ),
                       ),
-                      /*Chip(
-                        label: Text('Rest'),
-                        labelPadding: EdgeInsets.fromLTRB(24, 13, 24, 13),
-                        backgroundColor: ,
-                      ),*/
-                      /*ChoiceChip(
-                          label: Text('Rest'),
-                          selected: _useChisel,
-                          selectedColor: pink,
-                          onSelected: (bool newValue) {
-                            setState(() {
-                              _useChisel = newValue;
-                            });
-                          },
-                          backgroundColor: lightPink,
-                          labelStyle: TextStyle(
-                            color: lightPink,
-                          ),
-                      ),*/
-                      Padding(
-                        padding: const EdgeInsets.all(60.0),
-                        child: buildChoiceChips(),
-                      ),
+
                     ],
                   ),
                 //),
               ),
             ),
-            /*Padding(
-              padding: const EdgeInsets.only(top: 50),
-              *//*child: ScrollableSingleChip(),*//*
-              //child: Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: _choices.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ChoiceChip(
-                    label: Text(_choices[index]),
-                    selected: _defaultChoiceIndex == index,
-                    selectedColor: pink,
-                    onSelected: (bool selected) {
-                      setState(() {
-                        _defaultChoiceIndex = selected ? index : 0;
-                      });
-                    },
-                    backgroundColor: lightPink,
-                    labelStyle: TextStyle(
-                      color: lightPink,
-                    ),
-                  );
-                },
-              ),
-              //),
-            ),*/
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -255,6 +155,86 @@ class _ResultScreenState extends State<ResultScreen> {
                       context, MaterialPageRoute(builder: (_) => HomePage()));
                 },
               ),
+            ),
+
+            Row(
+              children: [
+                ElevatedButton(
+                    onPressed: _isRestDisable
+                    ? null
+                    : () => setState(() {
+                      _isRestDisable = true;
+                      _isNormalDisable = false;
+                      _isActiveDisable = false;
+                    }),
+                    child: Text('Rest'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled))
+                          return Color.fromRGBO(255, 106, 137, 1);
+                        return Color.fromRGBO(255, 241, 243, 1);
+                      },
+                    ),
+                    foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                           if (states.contains(MaterialState.disabled))
+                             return Color.fromRGBO(255, 255, 255, 1);
+                          return Color.fromRGBO(255, 106, 137, 1);
+                        }),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: _isNormalDisable
+                      ? null
+                      : () => setState(() {
+                        _isRestDisable = false;
+                        _isNormalDisable = true;
+                        _isActiveDisable = false;
+                  }),
+                  child: Text('Normal'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled))
+                          return Color.fromRGBO(255, 106, 137, 1);
+                        return Color.fromRGBO(255, 241, 243, 1);
+                      },
+                    ),
+                    foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                           if (states.contains(MaterialState.disabled))
+                             return Color.fromRGBO(255, 255, 255, 1);
+                          return Color.fromRGBO(255, 106, 137, 1);
+                        }),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: _isActiveDisable
+                      ? null
+                      : () => setState(() {
+                        _isRestDisable = false;
+                        _isNormalDisable = false;
+                        _isActiveDisable = true;
+                  }),
+                  child: Text('Active'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled))
+                          return Color.fromRGBO(255, 106, 137, 1);
+                        return Color.fromRGBO(255, 241, 243, 1);
+                      },
+                    ),
+                    foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                           if (states.contains(MaterialState.disabled))
+                             return Color.fromRGBO(255, 255, 255, 1);
+                          return Color.fromRGBO(255, 106, 137, 1);
+                        }),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
