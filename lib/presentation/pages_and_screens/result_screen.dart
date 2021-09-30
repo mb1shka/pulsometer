@@ -159,6 +159,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                         RoundedRectangleBorder>((Set<MaterialState> states) {
                                       return RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(24.0),
+                                        side: BorderSide(color: pink),
                                       );
                                     })
                                 ),
@@ -197,6 +198,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                         RoundedRectangleBorder>((Set<MaterialState> states) {
                                       return RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(24.0),
+                                        side: BorderSide(color: pink),
                                       );
                                     })
                                 ),
@@ -235,6 +237,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                         RoundedRectangleBorder>((Set<MaterialState> states) {
                                       return RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(24.0),
+                                        side: BorderSide(color: pink),
                                       );
                                     })
                                 ),
