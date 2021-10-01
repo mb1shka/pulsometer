@@ -292,35 +292,38 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
 
 
-            Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromRGBO(255, 106, 137, 1),
-                  fixedSize: Size(224, 46),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Color.fromRGBO(255, 106, 137, 1),
+                    fixedSize: Size(224, 46),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24.0),
+                    ),
                   ),
-                ),
-                child: Text(
-                  'Save',
-                  style: TextStyle(
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                    fontSize: 17,
-                    fontStyle: FontStyle.normal,
+                  child: Text(
+                    'Save',
+                    style: TextStyle(
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      fontSize: 17,
+                      fontStyle: FontStyle.normal,
+                    ),
                   ),
+                  onPressed: () async {
+                    setState(() {
+                      comment = _controller.text;
+                    });
+                    await MeasurementDataBase.instance.create(new Measurement(
+                        BPM: BPM,
+                        status: status,
+                        comment: comment,
+                        dateTime: dateTime));
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (_) => HomePage()));
+                  },
                 ),
-                onPressed: () async {
-                  setState(() {
-                    comment = _controller.text;
-                  });
-                  await MeasurementDataBase.instance.create(new Measurement(
-                      BPM: BPM,
-                      status: status,
-                      comment: comment,
-                      dateTime: dateTime));
-                  Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (_) => HomePage()));
-                },
               ),
             ),
           ],
