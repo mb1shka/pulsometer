@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:heart_rate/data/database/measurement_database.dart';
 import 'package:heart_rate/data/model/measurement.dart';
 import 'package:heart_rate/data/model/status.dart';
@@ -43,13 +44,20 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
         body: FutureBuilder<List<Measurement>>(
           future: MeasurementDataBase.instance.readAll(),
           builder: (BuildContext context, AsyncSnapshot<List<Measurement>> snapshot) {
-            List<Measurement> measurements = [];
-            var rawMeasurements = snapshot.data;
-            if (rawMeasurements != null) {
-              measurements = rawMeasurements;
+            if (snapshot.hasData) {
+              return new ListView.builder(
+                itemBuilder: (context, index) => StatisticsElement(snapshot.data![index]),
+                itemCount: snapshot.data!.length,
+              );
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              return Column(
+                children: [
+                  Center(child: SvgPicture.asset('assets/svg/amico.svg')),
+                ],
+              );
+            } else {
+              return SizedBox();
             }
-            Widget statElements = getStatisticsElements(measurements);
-            return statElements;
           },
         ),
     );
