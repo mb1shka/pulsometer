@@ -24,34 +24,46 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: const Color(0xFFFFFFFF),
-          elevation: 0,
-          selectedFontSize: 10,
-          unselectedFontSize: 10,
-          fixedColor: new Color(0xFFFF6A89),
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.tab_heart
-              ),
-              label: ' ',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.tab_statistics
-              ),
-              label: ' ',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                  CustomIcons.tab_settings
-              ),
-              label: ' ',
-            ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(24), topLeft: Radius.circular(24)),
+          boxShadow: [
+            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
           ],
-          currentIndex: _selectedIndex,
-          onTap: (int index) => setState(() => _selectedIndex = index),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+          child: BottomNavigationBar(
+            backgroundColor: const Color(0xFFFFFFFF),
+            elevation: 0,
+            selectedFontSize: 10,
+            unselectedFontSize: 10,
+            fixedColor: new Color(0xFFFF6A89),
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(
+                    CustomIcons.tab_heart
+                ),
+                label: ' ',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                    CustomIcons.tab_statistics
+                ),
+                label: ' ',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                    CustomIcons.tab_settings
+                ),
+                label: ' ',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            onTap: (int index) => setState(() => _selectedIndex = index),
+          ),
+        ),
       ),
       body: tabs.elementAt(_selectedIndex),
 

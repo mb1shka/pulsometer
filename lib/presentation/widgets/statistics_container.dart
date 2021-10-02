@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:heart_rate/data/database/measurement_database.dart';
 import 'package:heart_rate/data/model/measurement.dart';
 import 'package:heart_rate/data/model/status.dart';
+import 'package:heart_rate/presentation/pages_and_screens/show_measurement_data.dart';
 import 'package:heart_rate/presentation/widgets/statistics_element.dart';
 
 import '../../custom_icons.dart';
@@ -18,7 +19,8 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: Text('Statistics',
+        title: Text(
+          'Statistics',
           style: TextStyle(
             color: new Color(0xFF121212),
             fontStyle: FontStyle.normal,
@@ -33,33 +35,47 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => ShowMeasurementData(BPM: '72', status: ' ', comment: 'comment', dateTime: new DateTime.now().toString())),
+                );
+              },
               //TODO: make a showdialog how to use
               icon: Icon(
                 CustomIcons.info,
-              )
+              )),
+        ],
+      ),
+      body: Stack(
+        children: [
+          FutureBuilder<List<Measurement>>(
+            future: MeasurementDataBase.instance.readAll(),
+            builder: (BuildContext context,
+                AsyncSnapshot<List<Measurement>> snapshot) {
+              if (snapshot.hasData && snapshot.data!.length > 0) {
+                return new ListView.builder(
+                  itemBuilder: (context, index) =>
+                      StatisticsElement(snapshot.data![index]),
+                  itemCount: snapshot.data!.length,
+                );
+              } else if (snapshot.data?.isEmpty ?? false) {
+                return SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset('assets/svg/amico.svg'),
+                    ],
+                  ),
+                );
+              } else {
+                return SizedBox();
+              }
+            },
           ),
         ],
       ),
-        body: FutureBuilder<List<Measurement>>(
-          future: MeasurementDataBase.instance.readAll(),
-          builder: (BuildContext context, AsyncSnapshot<List<Measurement>> snapshot) {
-            if (snapshot.hasData) {
-              return new ListView.builder(
-                itemBuilder: (context, index) => StatisticsElement(snapshot.data![index]),
-                itemCount: snapshot.data!.length,
-              );
-            } else if (snapshot.connectionState == ConnectionState.done) {
-              return Column(
-                children: [
-                  Center(child: SvgPicture.asset('assets/svg/amico.svg')),
-                ],
-              );
-            } else {
-              return SizedBox();
-            }
-          },
-        ),
     );
   }
 
@@ -75,7 +91,7 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
   Widget getStatisticsElements(List<Measurement> measurements) {
     List<Widget> elements = [];
 
-    for (var i=0; i < measurements.length; i++) {
+    for (var i = 0; i < measurements.length; i++) {
       elements.add(new StatisticsElement(measurements[i]));
     }
     return new ListView.builder(
