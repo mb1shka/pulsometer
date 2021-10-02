@@ -38,7 +38,7 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (_) => ShowMeasurementData(BPM: '72', status: ' ', comment: 'comment', dateTime: new DateTime.now().toString())),
+                  MaterialPageRoute(builder: (_) => ShowMeasurementData(BPM: '72', status: ' ', comment: 'comment', date: new DateTime.now().toString(), time: ' ',)),
                 );
               },
               //TODO: make a showdialog how to use

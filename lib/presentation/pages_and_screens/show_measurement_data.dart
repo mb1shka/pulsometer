@@ -12,13 +12,15 @@ class ShowMeasurementData extends StatelessWidget {
   final String BPM;
   final String status;
   final String comment;
-  final String dateTime;
+  final String date;
+  final String time;
 
   ShowMeasurementData({
     required this.BPM,
     required this.status,
     required this.comment,
-    required this.dateTime,
+    required this.date,
+    required this.time
   });
 
   @override
@@ -52,16 +54,17 @@ class ShowMeasurementData extends StatelessWidget {
         ),
       ),
       body: Column(children: [
+        SizedBox(height: 36),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 16),
-              child: Text('first date'),
+              child: Text('$date'),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 16),
-              child: Text('second date'),
+              child: Text('$time'),
             ),
           ],
         ),
@@ -78,6 +81,7 @@ class ShowMeasurementData extends StatelessWidget {
               height: 48,
               child: Row(
                 children: [
+                  Expanded(child: SizedBox(),),
                   Text(
                     '${BPM.toString()}',
                     style: TextStyle(
@@ -127,7 +131,7 @@ class ShowMeasurementData extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 0, 16),
                   child: Text(
-                    'Normal',
+                    '${status.substring(7)}',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: new Color(0xFFFF6A89),
@@ -162,7 +166,7 @@ class ShowMeasurementData extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 0, 16),
                   child: Text(
-                    'Good morning',
+                    '$comment',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: new Color(0xFFFF6A89),

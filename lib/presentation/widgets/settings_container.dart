@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_rate/presentation/widgets/chip_painter.dart';
 
 import '../../custom_icons.dart';
 
@@ -27,17 +28,102 @@ class _SettingsContainerState extends State<SettingsContainer> {
         actionsIconTheme: IconThemeData(
           color: new Color(0xFFFF6A89),
         ),
-        /*actions: [
-          IconButton(
-              onPressed: () {},
-              //TODO: make a showdialog how to use
-              icon: Icon(
-                CustomIcons.info,
-              )
-          ),
-        ],*/
       ),
-      body: Column(children: <Widget>[
+      body: Column(
+        children: [
+          GestureDetector(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 36, 16, 0),
+              child: Stack(
+                children: [
+                  CustomPaint(
+                    size: Size(MediaQuery.of(context).size.width - 32, 52),
+                    painter: ChipPainter(),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 16, 12, 16),
+                            child: Icon(
+                              CustomIcons.group,
+                              color: new Color.fromRGBO(255, 106, 137, 1),
+                            ),
+                          ),
+                          Text(
+                            "Support",
+                            style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 16, 20),
+                        child: Icon(
+                          CustomIcons.disclosure,
+                          size: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: Stack(
+                children: [
+                  CustomPaint(
+                    size: Size(MediaQuery.of(context).size.width - 32, 52),
+                    painter: ChipPainter(),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 16, 12, 16),
+                            child: Icon(
+                              CustomIcons.privacy,
+                              color: new Color.fromRGBO(255, 106, 137, 1),
+                            ),
+                          ),
+                          Text(
+                            "Privacy Policy",
+                            style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 16, 20),
+                        child: Icon(
+                          CustomIcons.disclosure,
+                          size: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      /*Column(children: <Widget>[
         ElevatedButton(
           onPressed: () {},
           child: Row(
@@ -69,10 +155,10 @@ class _SettingsContainerState extends State<SettingsContainer> {
                 borderRadius: BorderRadius.circular(18.0),
                 //side: BorderSide(color: Colors.black),
               ),
-            ),/*
+            ), *//*
             fixedSize: MaterialStateProperty.resolveWith<Size>(
               (states) => Size(343, 52),
-            ),*/
+            ),*//*
           ),
         ),
         ElevatedButton(
@@ -106,13 +192,13 @@ class _SettingsContainerState extends State<SettingsContainer> {
                 borderRadius: BorderRadius.circular(18.0),
                 //side: BorderSide(color: Colors.black),
               ),
-            ),/*
+            ), *//*
             fixedSize: MaterialStateProperty.resolveWith<Size>(
               (states) => Size(343, 52),
-            ),*/
+            ),*//*
           ),
         ),
-      ]),
+      ]),*/
     );
   }
 }
