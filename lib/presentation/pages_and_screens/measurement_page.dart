@@ -239,7 +239,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
                                   },
                                 );
                               })
-                          : () => Navigator.pushReplacement(
+                          : () => Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (_) => ResultScreen(middleValue)),
                               ),

@@ -15,8 +15,60 @@ class StatisticsContainer extends StatefulWidget {
 }
 
 class _StatisticsContainerState extends State<StatisticsContainer> {
+  String _selectedItem = 'Today';
+
   @override
   Widget build(BuildContext context) {
+    void _selectItem(String name) {
+      Navigator.pop(context);
+      setState(() {
+        _selectedItem = name;
+      });
+    }
+
+    Column _buildBottomNavigationMenu() {
+      return Column(
+        children: <Widget>[
+          ListTile(
+            title: Text('Today'),
+            onTap: () => _selectItem('Today'),
+          ),
+          ListTile(
+            title: Text('Week'),
+            onTap: () => _selectItem('Week'),
+          ),
+          ListTile(
+            title: Text('Month'),
+            onTap: () => _selectItem('Month'),
+          ),
+          ListTile(
+            title: Text('Year'),
+            onTap: () => _selectItem('Year'),
+          ),
+        ],
+      );
+    }
+
+    void _onButtonPressed() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              color: Color(0xFF737373),
+              height: 240,
+              child: Container(
+                child: _buildBottomNavigationMenu(),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).canvasColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: const Radius.circular(16),
+                      topRight: const Radius.circular(16),
+                    )),
+              ),
+            );
+          });
+    }
+
     return new Scaffold(
       appBar: AppBar(
         title: Text(
@@ -33,18 +85,32 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
         actionsIconTheme: IconThemeData(
           color: new Color(0xFFFF6A89),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) => ShowMeasurementData(BPM: '72', status: ' ', comment: 'comment', date: new DateTime.now().toString(), time: ' ',)),
-                );
-              },
-              //TODO: make a showdialog how to use
-              icon: Icon(
-                CustomIcons.info,
-              )),
+        actions: [/*
+          GestureDetector(
+            child: Text(_selectedItem),
+            onTap: () => _onButtonPressed(),
+          ),*/
+          Column(
+            children: [
+              ElevatedButton(
+                //TODO: delete animation of the button
+                onPressed: () {
+                  _onButtonPressed();
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  elevation: 0,
+                ),
+                child: Text(_selectedItem,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 17,
+                    color: new Color(0xFFFF6A89),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
       body: Stack(
@@ -78,15 +144,6 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
       ),
     );
   }
-
-  // Future<List<Measurement>> loadMeasurments() async {
-  //
-  //   List<Measurement> measurments = [
-  //     Measurement(BPM: 56, status: Status.Normal, comment: "comment", dateTime: new DateTime.now()),
-  //     Measurement(BPM: 56, status: Status.Normal, comment: "comment", dateTime: new DateTime.now())
-  //   ];
-  //   return Future<List<Measurement>>(() => measurments);
-  // }
 
   Widget getStatisticsElements(List<Measurement> measurements) {
     List<Widget> elements = [];

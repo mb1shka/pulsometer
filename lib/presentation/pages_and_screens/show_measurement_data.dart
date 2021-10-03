@@ -5,7 +5,7 @@ import 'package:heart_rate/custom_icons.dart';
 import 'package:heart_rate/data/model/measurement.dart';
 import 'package:heart_rate/presentation/widgets/chip_painter.dart';
 import 'package:heart_rate/presentation/widgets/statistics_container.dart';
-
+import 'dart:math' as math;
 import 'home_page.dart';
 
 class ShowMeasurementData extends StatelessWidget {
@@ -26,6 +26,7 @@ class ShowMeasurementData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           'Measurement',
@@ -45,11 +46,14 @@ class ShowMeasurementData extends StatelessWidget {
 
           //TODO: add actions
         ],*/
-        leading: IconButton(
-          icon: Icon(CustomIcons.disclosure),
-          onPressed: () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => HomePage()),
+        leading: Transform.rotate(
+          angle: 180 * math.pi / 180,
+          child: IconButton(
+            icon: Icon(CustomIcons.disclosure,
+              color: Colors.black,
+              size: 16,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
           ),
         ),
       ),
@@ -60,11 +64,22 @@ class ShowMeasurementData extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 16),
-              child: Text('$date'),
+              child: Text('$date',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Color.fromRGBO(18, 18, 18, 1),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 16),
-              child: Text('$time'),
+              child: Text('$time',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Color.fromRGBO(18, 18, 18, 1),
+                ),),
             ),
           ],
         ),

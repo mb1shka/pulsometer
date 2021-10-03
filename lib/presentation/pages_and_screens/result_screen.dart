@@ -70,14 +70,12 @@ class _ResultScreenState extends State<ResultScreen> {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => HomePage()),
-                  );
+                  Navigator.of(context).pop();
                 },
                 //TODO: make a showDialog how to use
                 icon: Icon(
                   CustomIcons.cross_icon,
+                  color: Colors.black,
                 )),
           ],
         ),
