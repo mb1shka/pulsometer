@@ -14,7 +14,7 @@ class MeasurementDataBase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('measurement.db');
+    _database = await _initDB('measurement.sqlite');
     return _database!;
   }
 
@@ -66,13 +66,20 @@ class MeasurementDataBase {
     }
   }
 
-  Future<List<Measurement>> readAll() async {
+  Future<List<Measurement>> readAll([DateTime? timestamp]) async {
     final db = await instance.database;
+    String? where;
+    List? whereArgs;
+
+    if (timestamp != null) {
+      where = "dateTime >= ?";
+      whereArgs = [timestamp.toUtc().millisecondsSinceEpoch];
+    }
 
     //DEC == reversed, с конца
-    final orderBy = '${MeasurementFields.dateTime} ASC';
+    final orderBy = '${MeasurementFields.dateTime} DESC';
     //WhereArgs
-    final result = await db.query(tableMeasurements, orderBy: orderBy);
+    final result = await db.query(tableMeasurements, orderBy: orderBy, where: where, whereArgs: whereArgs);
 
     return result.map((json) => Measurement.fromJson(json)).toList();
   }

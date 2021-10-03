@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:heart_rate/data/database/measurement_database.dart';
 import 'package:heart_rate/data/model/measurement.dart';
+import 'package:heart_rate/data/model/period.dart';
 import 'package:heart_rate/data/model/status.dart';
 import 'package:heart_rate/presentation/pages_and_screens/show_measurement_data.dart';
 import 'package:heart_rate/presentation/widgets/statistics_element.dart';
@@ -16,10 +17,11 @@ class StatisticsContainer extends StatefulWidget {
 
 class _StatisticsContainerState extends State<StatisticsContainer> {
   String _selectedItem = 'Today';
-  bool _isToday = true;
+  /*bool _isToday = true;
   bool _isWeek = false;
   bool _isMonth = false;
-  bool _isYear = false;
+  bool _isYear = false;*/
+  Period period = Period.Today;
 
   @override
   Widget build(BuildContext context) {
@@ -34,105 +36,96 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
       return Column(
         children: <Widget>[
           ListTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Today'),
-                _isToday ?
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Icon(CustomIcons.nike,
-                    size: 16,
-                    color: new Color(0xFFFF6A89),
-                  ),
-                ) : SizedBox(),
-              ],
-            ),
-            onTap: () {
-              setState(() {
-                _isToday = true;
-                _isWeek = false;
-                _isMonth = false;
-                _isYear = false;
-              });
-              _selectItem('Today');
-            }
-          ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Today'),
+                  period == Period.Today
+                      ? Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Icon(
+                            CustomIcons.nike,
+                            size: 16,
+                            color: new Color(0xFFFF6A89),
+                          ),
+                        )
+                      : SizedBox(),
+                ],
+              ),
+              onTap: () {
+                setState(() {
+                  period = Period.Today;
+                });
+                _selectItem('Today');
+              }),
           ListTile(
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Week'),
-                  _isWeek ?
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Icon(CustomIcons.nike,
-                      size: 16,
-                      color: new Color(0xFFFF6A89),
-                    ),
-                  ) : SizedBox(),
+                  period == Period.Week
+                      ? Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Icon(
+                            CustomIcons.nike,
+                            size: 16,
+                            color: new Color(0xFFFF6A89),
+                          ),
+                        )
+                      : SizedBox(),
                 ],
               ),
               onTap: () {
                 setState(() {
-                  _isToday = false;
-                  _isWeek = true;
-                  _isMonth = false;
-                  _isYear = false;
+                  period = Period.Week;
                 });
                 _selectItem('Week');
-              }
-          ),
+              }),
           ListTile(
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Month'),
-                  _isMonth ?
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Icon(CustomIcons.nike,
-                      size: 16,
-                      color: new Color(0xFFFF6A89),
-                    ),
-                  ) : SizedBox(),
+                  period == Period.Month
+                      ? Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Icon(
+                            CustomIcons.nike,
+                            size: 16,
+                            color: new Color(0xFFFF6A89),
+                          ),
+                        )
+                      : SizedBox(),
                 ],
               ),
               onTap: () {
                 setState(() {
-                  _isToday = false;
-                  _isWeek = false;
-                  _isMonth = true;
-                  _isYear = false;
+                  period = Period.Month;
                 });
                 _selectItem('Month');
-              }
-          ),
+              }),
           ListTile(
               title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Year'),
-                  _isYear ?
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Icon(CustomIcons.nike,
-                      size: 16,
-                      color: new Color(0xFFFF6A89),
-                    ),
-                  ) : SizedBox(),
-                ]
-              ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Year'),
+                    period == Period.Year
+                        ? Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Icon(
+                              CustomIcons.nike,
+                              size: 16,
+                              color: new Color(0xFFFF6A89),
+                            ),
+                          )
+                        : SizedBox(),
+                  ]),
               onTap: () {
                 setState(() {
-                  _isToday = false;
-                  _isWeek = false;
-                  _isMonth = false;
-                  _isYear = true;
+                  period = Period.Year;
                 });
                 _selectItem('Year');
-              }
-          ),
+              }),
         ],
       );
     }
@@ -173,7 +166,8 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
         actionsIconTheme: IconThemeData(
           color: new Color(0xFFFF6A89),
         ),
-        actions: [/*
+        actions: [
+          /*
           GestureDetector(
             child: Text(_selectedItem),
             onTap: () => _onButtonPressed(),
@@ -189,7 +183,8 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
                   primary: Colors.white,
                   elevation: 0,
                 ),
-                child: Text(_selectedItem,
+                child: Text(
+                  _selectedItem,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 17,
@@ -204,7 +199,7 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
       body: Stack(
         children: [
           FutureBuilder<List<Measurement>>(
-            future: MeasurementDataBase.instance.readAll(),
+            future: MeasurementDataBase.instance.readAll(getDateTimeFilter()),
             builder: (BuildContext context,
                 AsyncSnapshot<List<Measurement>> snapshot) {
               if (snapshot.hasData && snapshot.data!.length > 0) {
@@ -231,6 +226,23 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
         ],
       ),
     );
+  }
+
+  DateTime? getDateTimeFilter() {
+    var currentTime = new DateTime.now();
+    //var duration = new Duration(days: 1);
+    //var filter = currentTime.add(-duration);
+    //return filter;
+    switch (period) {
+      case Period.Today:
+        return currentTime.add(-new Duration( days: 1));
+      case Period.Week:
+        return currentTime.add(-new Duration(days: 7));
+      case Period.Month:
+        return currentTime.add(-new Duration(days: 31));
+      case Period.Year:
+        return currentTime.add(-new Duration(days:365));
+    }
   }
 
   Widget getStatisticsElements(List<Measurement> measurements) {
