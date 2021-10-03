@@ -16,6 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:heart_rate/presentation/widgets/custom_dialog_box.dart';
 
 import 'package:provider/provider.dart';
+//import 'package:rive/rive.dart';
 
 class MeasurementPage extends StatefulWidget {
   const MeasurementPage({Key? key}) : super(key: key);
@@ -28,6 +29,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
   List<SensorValue> data = [];
   //Widget chart = BPMChart(data);
 
+  //late RiveAnimationController _controller;
   String btnText = "Start";
   bool isBPMEnabled = false;
   var btnTextColor = Color.fromRGBO(255, 255, 255, 1);
@@ -48,6 +50,11 @@ class _MeasurementPageState extends State<MeasurementPage> {
     // _timer.cancel(); // проверить задан ли таймер
     super.dispose();
   }
+
+  /*void _togglePlay() =>
+      setState(() => _controller.isActive = !_controller.isActive);
+
+  bool get isPlaying => _controller.isActive;*/
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +98,14 @@ class _MeasurementPageState extends State<MeasurementPage> {
               padding: const EdgeInsets.fromLTRB(0, 70, 0, 0),
               child: Center(
                 child: SvgPicture.asset('assets/svg/measurement_hearts.svg'),
+                /*child: SizedBox(
+                  height: 260,
+                  width: 286,
+                  child: RiveAnimation.asset(
+                    'assets/animation/heart_anim.riv',
+                    fit: BoxFit.fill,
+                  ),
+                ),*/
               ),
             )),
             SafeArea(
@@ -259,6 +274,8 @@ class _MeasurementPageState extends State<MeasurementPage> {
                 ),
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromRGBO(255, 255, 255, 1),
+
+                  elevation: 0,
                   /*fixedSize: Size(224, 46),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24.0),

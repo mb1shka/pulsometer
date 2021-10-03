@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_rate/custom_icons.dart';
 import 'package:heart_rate/presentation/icons/heart_beat_icon.dart';
+import 'package:heart_rate/presentation/pages_and_screens/intro_screen.dart';
 import 'package:heart_rate/presentation/pages_and_screens/measurement_page.dart';
 import 'package:heart_rate/presentation/pages_and_screens/settings_page.dart';
 import 'package:heart_rate/presentation/pages_and_screens/statistics_page.dart';
