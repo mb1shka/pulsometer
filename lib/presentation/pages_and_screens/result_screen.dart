@@ -350,8 +350,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           status: status,
                           comment: comment,
                           dateTime: dateTime));
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (_) => HomePage()));
+                      Navigator.pop(context);
                     },
                   ),
                 ),

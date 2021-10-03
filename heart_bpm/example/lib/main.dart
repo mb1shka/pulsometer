@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   //  Widget chart = BPMChart(data);
 
   bool isBPMEnabled = false;
-  Widget dialog;
+  late Widget dialog;
 
   @override
   Widget build(BuildContext context) {

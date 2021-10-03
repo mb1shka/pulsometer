@@ -4,6 +4,7 @@ import 'package:heart_rate/custom_icons.dart';
 import 'package:heart_rate/presentation/icons/heart_beat_icon.dart';
 import 'package:heart_rate/presentation/pages_and_screens/intro_screen.dart';
 import 'package:heart_rate/presentation/pages_and_screens/measurement_page.dart';
+import 'package:heart_rate/presentation/pages_and_screens/payment_page.dart';
 import 'package:heart_rate/presentation/pages_and_screens/settings_page.dart';
 import 'package:heart_rate/presentation/pages_and_screens/statistics_page.dart';
 
@@ -21,6 +22,19 @@ class _HomePageState extends State<HomePage> {
     StatisticsPage(),
     SettingsPage(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) =>
+                PaymentPage()),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
