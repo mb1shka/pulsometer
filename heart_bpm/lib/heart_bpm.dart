@@ -264,15 +264,6 @@ class _HeartBPPView extends State<HeartBPMDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: isCameraInitialized
-          ? Column(
-              children: [
-                Text(currentValue.toStringAsFixed(0)),
-                widget.child == null ? SizedBox() : widget.child,
-              ],
-            )
-          : Center(child: CircularProgressIndicator()),
-    );
+    return const SizedBox();
   }
 }
