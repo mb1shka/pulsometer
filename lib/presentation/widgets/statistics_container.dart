@@ -5,6 +5,7 @@ import 'package:heart_rate/data/database/measurement_database.dart';
 import 'package:heart_rate/data/model/measurement.dart';
 import 'package:heart_rate/data/model/period.dart';
 import 'package:heart_rate/data/model/status.dart';
+import 'package:heart_rate/presentation/pages_and_screens/home_page.dart';
 import 'package:heart_rate/presentation/pages_and_screens/show_measurement_data.dart';
 import 'package:heart_rate/presentation/widgets/statistics_element.dart';
 
@@ -222,6 +223,31 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
                 return SizedBox();
               }
             },
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 49),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (_) => HomePage()));
+                },
+                child: Text(
+                  'Add new measurement',
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.white,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                    primary: new Color(0xFFFF6A89),
+                    fixedSize: Size(224, 46),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24.0),
+                    )),
+              ),
+            ),
           ),
         ],
       ),

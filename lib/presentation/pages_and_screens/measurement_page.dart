@@ -119,19 +119,65 @@ class _MeasurementPageState extends State<MeasurementPage> {
                           SvgPicture.asset('assets/svg/measurement_second.svg'),
                     ),
                   ),
-                  _isDisable ? Text(
-                    '$currentValue BPM',
-                    style: TextStyle(
-                      color: new Color(0xFFFF6A89),
-                      fontSize: 48,
+                  _isDisable ? SizedBox(
+                    height: 48,
+                    child: Row(
+                      children: [
+                        Expanded(child: SizedBox()),
+                        Text(
+                          '$currentValue',
+                          style: TextStyle(
+                            color: new Color(0xFFFF6A89),
+                            fontSize: 48,
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 4),
+                              child: Text(
+                                'BPM',
+                                style: TextStyle(
+                                  color: new Color(0xFFFF6A89),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ) : Text(
-                    '$middleValue BPM',
-                    style: TextStyle(
-                      color: new Color(0xFFFF6A89),
-                      fontSize: 48,
+                  ) : SizedBox(
+                    height: 48,
+                    child: Row(
+                      children: [
+                        Expanded(child: SizedBox()),
+                        Text(
+                          '$middleValue',
+                          style: TextStyle(
+                            color: new Color(0xFFFF6A89),
+                            fontSize: 48,
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 4),
+                              child: Text(
+                                'BPM',
+                                style: TextStyle(
+                                  color: new Color(0xFFFF6A89),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
