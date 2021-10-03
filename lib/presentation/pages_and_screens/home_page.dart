@@ -34,7 +34,8 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24), topRight: Radius.circular(24)),
           child: BottomNavigationBar(
             backgroundColor: const Color(0xFFFFFFFF),
             elevation: 0,
@@ -43,21 +44,15 @@ class _HomePageState extends State<HomePage> {
             fixedColor: new Color(0xFFFF6A89),
             items: [
               BottomNavigationBarItem(
-                icon: Icon(
-                    CustomIcons.tab_heart
-                ),
+                icon: Icon(CustomIcons.tab_heart),
                 label: ' ',
               ),
               BottomNavigationBarItem(
-                icon: Icon(
-                    CustomIcons.tab_statistics
-                ),
+                icon: Icon(CustomIcons.tab_statistics),
                 label: ' ',
               ),
               BottomNavigationBarItem(
-                icon: Icon(
-                    CustomIcons.tab_settings
-                ),
+                icon: Icon(CustomIcons.tab_settings),
                 label: ' ',
               ),
             ],
@@ -67,7 +62,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: tabs.elementAt(_selectedIndex),
-
     );
   }
 }

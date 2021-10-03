@@ -28,20 +28,23 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  camera: ^0.7.0
-  heart_bpm: ^1.0.0+0
-  shared_preferences: ^2.0.7
-  provider: ^6.0.0
+  camera: ^0.9.4+1
+  shared_preferences: ^2.0.8
+  provider: ^6.0.1
   sqflite: ^2.0.0+4
   path: ^1.8.0
-  json_annotation: ^4.0.1
-  flutter_svg: ^0.21.0+1
+  json_annotation: ^4.1.0
+  flutter_svg: ^0.22.0
   chips_choice: ^2.0.1
+  intl: ^0.17.0
+  rive: ^0.7.28
+  heart_bpm:
+    path: heart_bpm
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_native_splash: ^1.2.3
+  flutter_native_splash: ^1.2.4
 
 
 
@@ -59,6 +62,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/svg/
+    - assets/animation/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -75,7 +79,7 @@ flutter:
   fonts:
     - family: HeartBeatIcon
       fonts:
-      - asset: assets/fonts/CustomIcons.ttf
+        - asset: assets/fonts/CustomIcons.ttf
 
     - family: CustomIcons
       fonts:

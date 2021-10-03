@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:heart_bpm/chart.dart';
 import 'package:heart_bpm/heart_bpm.dart';
 import 'package:heart_rate/custom_icons.dart';
 import 'package:heart_rate/data/listeners/heart_rate_listener.dart';
@@ -16,7 +15,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:heart_rate/presentation/widgets/custom_dialog_box.dart';
 
 import 'package:provider/provider.dart';
-//import 'package:rive/rive.dart';
+import 'package:rive/rive.dart';
 
 class MeasurementPage extends StatefulWidget {
   const MeasurementPage({Key? key}) : super(key: key);
@@ -25,6 +24,8 @@ class MeasurementPage extends StatefulWidget {
 }
 
 class _MeasurementPageState extends State<MeasurementPage> {
+  late RiveAnimationController _controller;
+
   HeartRateCalculator _heartRateCalculator = new HeartRateCalculator();
   List<SensorValue> data = [];
   //Widget chart = BPMChart(data);
@@ -45,22 +46,34 @@ class _MeasurementPageState extends State<MeasurementPage> {
   late Timer _timer;
   int _start = 10;
 
+  /// Toggles between play and pause animation states
+  void _togglePlay() =>
+      setState(() => _controller.isActive = !_controller.isActive);
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = SimpleAnimation(
+      'Animation 1',
+      autoplay: false,
+    );
+  }
+
   @override
   void dispose() {
     // _timer.cancel(); // проверить задан ли таймер
     super.dispose();
   }
 
-  /*void _togglePlay() =>
-      setState(() => _controller.isActive = !_controller.isActive);
-
-  bool get isPlaying => _controller.isActive;*/
+  void _onRiveInit(Artboard artboard) {
+    artboard.addController(_controller);
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: new Color(0xFFFFFFFF),
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
             'Measurement',
@@ -83,8 +96,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
                       context: context,
                       builder: (BuildContext context) {
                         return CustomDialogBox();
-                      }
-                  );
+                      });
                 },
                 icon: Icon(
                   CustomIcons.info,
@@ -97,15 +109,17 @@ class _MeasurementPageState extends State<MeasurementPage> {
                 child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 70, 0, 0),
               child: Center(
-                child: SvgPicture.asset('assets/svg/measurement_hearts.svg'),
-                /*child: SizedBox(
+                //  child: SvgPicture.asset('assets/svg/measurement_hearts.svg'),
+                child: SizedBox(
                   height: 260,
                   width: 286,
                   child: RiveAnimation.asset(
                     'assets/animation/heart_anim.riv',
                     fit: BoxFit.fill,
+                    controllers: [_controller],
+                    onInit: _onRiveInit,
                   ),
-                ),*/
+                ),
               ),
             )),
             SafeArea(
@@ -119,65 +133,67 @@ class _MeasurementPageState extends State<MeasurementPage> {
                           SvgPicture.asset('assets/svg/measurement_second.svg'),
                     ),
                   ),
-                  _isDisable ? SizedBox(
-                    height: 48,
-                    child: Row(
-                      children: [
-                        Expanded(child: SizedBox()),
-                        Text(
-                          '$currentValue',
-                          style: TextStyle(
-                            color: new Color(0xFFFF6A89),
-                            fontSize: 48,
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 4),
-                              child: Text(
-                                'BPM',
+                  _isDisable
+                      ? SizedBox(
+                          height: 48,
+                          child: Row(
+                            children: [
+                              Expanded(child: SizedBox()),
+                              Text(
+                                '$currentValue',
                                 style: TextStyle(
                                   color: new Color(0xFFFF6A89),
-                                  fontWeight: FontWeight.w500,
+                                  fontSize: 48,
                                 ),
                               ),
-                            ),
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 4),
+                                    child: Text(
+                                      'BPM',
+                                      style: TextStyle(
+                                        color: new Color(0xFFFF6A89),
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ) : SizedBox(
-                    height: 48,
-                    child: Row(
-                      children: [
-                        Expanded(child: SizedBox()),
-                        Text(
-                          '$middleValue',
-                          style: TextStyle(
-                            color: new Color(0xFFFF6A89),
-                            fontSize: 48,
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 4),
-                              child: Text(
-                                'BPM',
+                        )
+                      : SizedBox(
+                          height: 48,
+                          child: Row(
+                            children: [
+                              Expanded(child: SizedBox()),
+                              Text(
+                                '$middleValue',
                                 style: TextStyle(
                                   color: new Color(0xFFFF6A89),
-                                  fontWeight: FontWeight.w500,
+                                  fontSize: 48,
                                 ),
                               ),
-                            ),
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 4),
+                                    child: Text(
+                                      'BPM',
+                                      style: TextStyle(
+                                        color: new Color(0xFFFF6A89),
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  )
+                        )
                 ],
               ),
             ),
@@ -266,12 +282,13 @@ class _MeasurementPageState extends State<MeasurementPage> {
                                   // dialog.
                                 } else
                                   isBPMEnabled = true;
-
+                                _togglePlay();
                                 const oneSec = const Duration(seconds: 1);
                                 _timer = new Timer.periodic(
                                   oneSec,
                                   (Timer timer) {
                                     if (_start == 0) {
+                                      _togglePlay();
                                       setState(() {
                                         middleValue =
                                             _heartRateCalculator.calculate();
@@ -302,33 +319,36 @@ class _MeasurementPageState extends State<MeasurementPage> {
                               })
                           : () => Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (_) => ResultScreen(middleValue)),
+                                MaterialPageRoute(
+                                    builder: (_) => ResultScreen(middleValue)),
                               ),
                 ),
               ),
             ),
-            _toRestart ? Center(
-              child: ElevatedButton(
-                onPressed: () => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) => HomePage()),
-                ),
-                child: Text('Restart',
-                  style: TextStyle(
-                    color: Color.fromRGBO(255, 106, 137, 1),
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromRGBO(255, 255, 255, 1),
-
-                  elevation: 0,
-                  /*fixedSize: Size(224, 46),
+            _toRestart
+                ? Center(
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => HomePage()),
+                      ),
+                      child: Text(
+                        'Restart',
+                        style: TextStyle(
+                          color: Color.fromRGBO(255, 106, 137, 1),
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromRGBO(255, 255, 255, 1),
+                        elevation: 0,
+                        /*fixedSize: Size(224, 46),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24.0),
                   ),*/
-                ),
-              ),
-            ) : SizedBox(),
+                      ),
+                    ),
+                  )
+                : SizedBox(),
             /*Center(
               child: Text('Time left: $_start'),
             ),

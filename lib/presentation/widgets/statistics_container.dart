@@ -152,6 +152,7 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
     }
 
     return new Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           'Statistics',
@@ -261,13 +262,13 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
     //return filter;
     switch (period) {
       case Period.Today:
-        return currentTime.add(-new Duration( days: 1));
+        return currentTime.add(-new Duration(days: 1));
       case Period.Week:
         return currentTime.add(-new Duration(days: 7));
       case Period.Month:
         return currentTime.add(-new Duration(days: 31));
       case Period.Year:
-        return currentTime.add(-new Duration(days:365));
+        return currentTime.add(-new Duration(days: 365));
     }
   }
 

@@ -5,9 +5,6 @@ import 'package:heart_rate/presentation/widgets/settings_container.dart';
 class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: SettingsContainer(),
-    );
+    return SettingsContainer();
   }
-
 }

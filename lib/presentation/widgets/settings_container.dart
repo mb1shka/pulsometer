@@ -13,6 +13,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           'Settings',
@@ -155,10 +156,10 @@ class _SettingsContainerState extends State<SettingsContainer> {
                 borderRadius: BorderRadius.circular(18.0),
                 //side: BorderSide(color: Colors.black),
               ),
-            ), *//*
+            ), */ /*
             fixedSize: MaterialStateProperty.resolveWith<Size>(
               (states) => Size(343, 52),
-            ),*//*
+            ),*/ /*
           ),
         ),
         ElevatedButton(
@@ -192,10 +193,10 @@ class _SettingsContainerState extends State<SettingsContainer> {
                 borderRadius: BorderRadius.circular(18.0),
                 //side: BorderSide(color: Colors.black),
               ),
-            ), *//*
+            ), */ /*
             fixedSize: MaterialStateProperty.resolveWith<Size>(
               (states) => Size(343, 52),
-            ),*//*
+            ),*/ /*
           ),
         ),
       ]),*/

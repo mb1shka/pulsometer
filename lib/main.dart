@@ -42,13 +42,14 @@ class MyAppState extends State<MyApp> {
         ChangeNotifierProvider<HeartRateListener>(
             create: (context) => HeartRateListener()),
       ],*/
-      //child:
+    //child:
     return MaterialApp(
-        // debugShowCheckedModeBanner: false,
-        //TODO: to know, what IS it
-        title: 'Heart rate app',
-        // home: isFirstRun ? HomePage() : IntroScreen(),
-        home: HomePage(),
+      // debugShowCheckedModeBanner: false,
+      //TODO: to know, what IS it
+      title: 'Heart rate app',
+      // home: isFirstRun ? HomePage() : IntroScreen(),
+      home: HomePage(),
+
       //),
     );
   }

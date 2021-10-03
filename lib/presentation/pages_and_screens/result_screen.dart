@@ -35,7 +35,6 @@ class _ResultScreenState extends State<ResultScreen> {
   Color lightPink = new Color(0xFFFFF1F3);
   Color pink = new Color(0xFFFF6A89);
 
-
   _ResultScreenState({
     required this.BPM,
   });
@@ -48,12 +47,10 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width - 32;
 
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         backgroundColor: new Color(0xFFFFFFFF),
         appBar: AppBar(
           title: Text(
@@ -79,32 +76,34 @@ class _ResultScreenState extends State<ResultScreen> {
                 )),
           ],
         ),
-        body: Column(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 50, 0, 50),
-                  child: SvgPicture.asset('assets/svg/measurement_second.svg'),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 50, 0, 50),
-                  child: Text(
-                    '$BPM  BPM',
-                    style: TextStyle(
-                      color: new Color(0xFFFF6A89),
-                      fontSize: 48,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 50, 0, 50),
+                    child:
+                        SvgPicture.asset('assets/svg/measurement_second.svg'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 50, 0, 50),
+                    child: Text(
+                      '$BPM  BPM',
+                      style: TextStyle(
+                        color: new Color(0xFFFF6A89),
+                        fontSize: 48,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
                     child: Stack(
                       children: [
                         CustomPaint(
@@ -113,7 +112,8 @@ class _ResultScreenState extends State<ResultScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(16, 16, 0, 24),
-                          child: Text('What is your current status?',
+                          child: Text(
+                            'What is your current status?',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 17,
@@ -131,37 +131,46 @@ class _ResultScreenState extends State<ResultScreen> {
                                   onPressed: _isRestDisable
                                       ? null
                                       : () => setState(() {
-                                    _isRestDisable = true;
-                                    _isNormalDisable = false;
-                                    _isActiveDisable = false;
-                                    status = Status.Rest;
-                                  }),
+                                            _isRestDisable = true;
+                                            _isNormalDisable = false;
+                                            _isActiveDisable = false;
+                                            status = Status.Rest;
+                                          }),
                                   child: Text('Rest'),
                                   style: ButtonStyle(
-                                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                                            (Set<MaterialState> states) {
-                                          if (states.contains(MaterialState.disabled))
-                                            return Color.fromRGBO(255, 106, 137, 1);
-                                          return Color.fromRGBO(255, 241, 243, 1);
+                                      backgroundColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                          if (states
+                                              .contains(MaterialState.disabled))
+                                            return Color.fromRGBO(
+                                                255, 106, 137, 1);
+                                          return Color.fromRGBO(
+                                              255, 241, 243, 1);
                                         },
                                       ),
-                                      fixedSize: MaterialStateProperty.resolveWith<Size>(
-                                            (states) => Size(85, 46),
+                                      fixedSize: MaterialStateProperty
+                                          .resolveWith<Size>(
+                                        (states) => Size(85, 46),
                                       ),
-                                      foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                                      foregroundColor: MaterialStateProperty
+                                          .resolveWith<Color>(
                                               (Set<MaterialState> states) {
-                                            if (states.contains(MaterialState.disabled))
-                                              return Color.fromRGBO(255, 255, 255, 1);
-                                            return Color.fromRGBO(255, 106, 137, 1);
-                                          }),
+                                        if (states
+                                            .contains(MaterialState.disabled))
+                                          return Color.fromRGBO(
+                                              255, 255, 255, 1);
+                                        return Color.fromRGBO(255, 106, 137, 1);
+                                      }),
                                       shape: MaterialStateProperty.resolveWith<
-                                          RoundedRectangleBorder>((Set<MaterialState> states) {
+                                              RoundedRectangleBorder>(
+                                          (Set<MaterialState> states) {
                                         return RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(24.0),
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
                                           side: BorderSide(color: pink),
                                         );
-                                      })
-                                  ),
+                                      })),
                                 ),
                               ),
                               Padding(
@@ -170,37 +179,46 @@ class _ResultScreenState extends State<ResultScreen> {
                                   onPressed: _isNormalDisable
                                       ? null
                                       : () => setState(() {
-                                    _isRestDisable = false;
-                                    _isNormalDisable = true;
-                                    _isActiveDisable = false;
-                                    status = Status.Normal;
-                                  }),
+                                            _isRestDisable = false;
+                                            _isNormalDisable = true;
+                                            _isActiveDisable = false;
+                                            status = Status.Normal;
+                                          }),
                                   child: Text('Normal'),
                                   style: ButtonStyle(
-                                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                                            (Set<MaterialState> states) {
-                                          if (states.contains(MaterialState.disabled))
-                                            return Color.fromRGBO(255, 106, 137, 1);
-                                          return Color.fromRGBO(255, 241, 243, 1);
+                                      backgroundColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                          if (states
+                                              .contains(MaterialState.disabled))
+                                            return Color.fromRGBO(
+                                                255, 106, 137, 1);
+                                          return Color.fromRGBO(
+                                              255, 241, 243, 1);
                                         },
                                       ),
-                                      fixedSize: MaterialStateProperty.resolveWith<Size>(
-                                            (states) => Size(108, 46),
+                                      fixedSize: MaterialStateProperty
+                                          .resolveWith<Size>(
+                                        (states) => Size(108, 46),
                                       ),
-                                      foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                                      foregroundColor: MaterialStateProperty
+                                          .resolveWith<Color>(
                                               (Set<MaterialState> states) {
-                                            if (states.contains(MaterialState.disabled))
-                                              return Color.fromRGBO(255, 255, 255, 1);
-                                            return Color.fromRGBO(255, 106, 137, 1);
-                                          }),
+                                        if (states
+                                            .contains(MaterialState.disabled))
+                                          return Color.fromRGBO(
+                                              255, 255, 255, 1);
+                                        return Color.fromRGBO(255, 106, 137, 1);
+                                      }),
                                       shape: MaterialStateProperty.resolveWith<
-                                          RoundedRectangleBorder>((Set<MaterialState> states) {
+                                              RoundedRectangleBorder>(
+                                          (Set<MaterialState> states) {
                                         return RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(24.0),
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
                                           side: BorderSide(color: pink),
                                         );
-                                      })
-                                  ),
+                                      })),
                                 ),
                               ),
                               Padding(
@@ -209,37 +227,46 @@ class _ResultScreenState extends State<ResultScreen> {
                                   onPressed: _isActiveDisable
                                       ? null
                                       : () => setState(() {
-                                    _isRestDisable = false;
-                                    _isNormalDisable = false;
-                                    _isActiveDisable = true;
-                                    status = Status.Active;
-                                  }),
+                                            _isRestDisable = false;
+                                            _isNormalDisable = false;
+                                            _isActiveDisable = true;
+                                            status = Status.Active;
+                                          }),
                                   child: Text('Active'),
                                   style: ButtonStyle(
-                                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                                            (Set<MaterialState> states) {
-                                          if (states.contains(MaterialState.disabled))
-                                            return Color.fromRGBO(255, 106, 137, 1);
-                                          return Color.fromRGBO(255, 241, 243, 1);
+                                      backgroundColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                          if (states
+                                              .contains(MaterialState.disabled))
+                                            return Color.fromRGBO(
+                                                255, 106, 137, 1);
+                                          return Color.fromRGBO(
+                                              255, 241, 243, 1);
                                         },
                                       ),
-                                      fixedSize: MaterialStateProperty.resolveWith<Size>(
-                                            (states) => Size(100, 46),
+                                      fixedSize: MaterialStateProperty
+                                          .resolveWith<Size>(
+                                        (states) => Size(100, 46),
                                       ),
-                                      foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                                      foregroundColor: MaterialStateProperty
+                                          .resolveWith<Color>(
                                               (Set<MaterialState> states) {
-                                            if (states.contains(MaterialState.disabled))
-                                              return Color.fromRGBO(255, 255, 255, 1);
-                                            return Color.fromRGBO(255, 106, 137, 1);
-                                          }),
+                                        if (states
+                                            .contains(MaterialState.disabled))
+                                          return Color.fromRGBO(
+                                              255, 255, 255, 1);
+                                        return Color.fromRGBO(255, 106, 137, 1);
+                                      }),
                                       shape: MaterialStateProperty.resolveWith<
-                                          RoundedRectangleBorder>((Set<MaterialState> states) {
+                                              RoundedRectangleBorder>(
+                                          (Set<MaterialState> states) {
                                         return RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(24.0),
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
                                           side: BorderSide(color: pink),
                                         );
-                                      })
-                                  ),
+                                      })),
                                 ),
                               ),
                             ],
@@ -247,84 +274,90 @@ class _ResultScreenState extends State<ResultScreen> {
                         ),
                       ],
                     ),
+                  ),
                 ),
               ),
-            ),
-
-            Container(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                child: Stack(
-                  children: [
-                    CustomPaint(
-                      size: Size(width, 122),
-                      painter: ChipPainter(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 16, 0, 24),
-                      child: Text('Comment',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 17,
-                        ),
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  child: Stack(
+                    children: [
+                      CustomPaint(
+                        size: Size(width, 122),
+                        painter: ChipPainter(),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 42, 16, 16),
-                      child: TextField(
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: lightPink),
-                            borderRadius: BorderRadius.all(Radius.circular(10))
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 0, 24),
+                        child: Text(
+                          'Comment',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 17,
                           ),
-                          hintText: 'Any additional information',
-                          filled: true,
-                          fillColor: Colors.white,
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 42, 16, 16),
+                        child: TextField(
+                          controller: _controller,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: lightPink),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            border: InputBorder.none,
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: lightPink),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            hintText: 'Any additional information',
+                            filled: true,
+                            fillColor: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-
-
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(255, 106, 137, 1),
-                    fixedSize: Size(224, 46),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24.0),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(255, 106, 137, 1),
+                      fixedSize: Size(224, 46),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.0),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    'Save',
-                    style: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                      fontSize: 17,
-                      fontStyle: FontStyle.normal,
+                    child: Text(
+                      'Save',
+                      style: TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                        fontSize: 17,
+                        fontStyle: FontStyle.normal,
+                      ),
                     ),
+                    onPressed: () async {
+                      setState(() {
+                        comment = _controller.text;
+                      });
+                      await MeasurementDataBase.instance.create(new Measurement(
+                          BPM: BPM,
+                          status: status,
+                          comment: comment,
+                          dateTime: dateTime));
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (_) => HomePage()));
+                    },
                   ),
-                  onPressed: () async {
-                    setState(() {
-                      comment = _controller.text;
-                    });
-                    await MeasurementDataBase.instance.create(new Measurement(
-                        BPM: BPM,
-                        status: status,
-                        comment: comment,
-                        dateTime: dateTime));
-                    Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (_) => HomePage()));
-                  },
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

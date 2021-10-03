@@ -5,8 +5,6 @@ import 'package:heart_rate/custom_icons.dart';
 import 'package:heart_rate/data/model/measurement.dart';
 import 'package:heart_rate/presentation/pages_and_screens/show_measurement_data.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/intl.dart';
 
 /*class StatisticsElement extends StatefulWidget {
   @override
