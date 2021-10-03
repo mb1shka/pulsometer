@@ -16,6 +16,10 @@ class StatisticsContainer extends StatefulWidget {
 
 class _StatisticsContainerState extends State<StatisticsContainer> {
   String _selectedItem = 'Today';
+  bool _isToday = true;
+  bool _isWeek = false;
+  bool _isMonth = false;
+  bool _isYear = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,20 +34,104 @@ class _StatisticsContainerState extends State<StatisticsContainer> {
       return Column(
         children: <Widget>[
           ListTile(
-            title: Text('Today'),
-            onTap: () => _selectItem('Today'),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Today'),
+                _isToday ?
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Icon(CustomIcons.nike,
+                    size: 16,
+                    color: new Color(0xFFFF6A89),
+                  ),
+                ) : SizedBox(),
+              ],
+            ),
+            onTap: () {
+              setState(() {
+                _isToday = true;
+                _isWeek = false;
+                _isMonth = false;
+                _isYear = false;
+              });
+              _selectItem('Today');
+            }
           ),
           ListTile(
-            title: Text('Week'),
-            onTap: () => _selectItem('Week'),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Week'),
+                  _isWeek ?
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Icon(CustomIcons.nike,
+                      size: 16,
+                      color: new Color(0xFFFF6A89),
+                    ),
+                  ) : SizedBox(),
+                ],
+              ),
+              onTap: () {
+                setState(() {
+                  _isToday = false;
+                  _isWeek = true;
+                  _isMonth = false;
+                  _isYear = false;
+                });
+                _selectItem('Week');
+              }
           ),
           ListTile(
-            title: Text('Month'),
-            onTap: () => _selectItem('Month'),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Month'),
+                  _isMonth ?
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Icon(CustomIcons.nike,
+                      size: 16,
+                      color: new Color(0xFFFF6A89),
+                    ),
+                  ) : SizedBox(),
+                ],
+              ),
+              onTap: () {
+                setState(() {
+                  _isToday = false;
+                  _isWeek = false;
+                  _isMonth = true;
+                  _isYear = false;
+                });
+                _selectItem('Month');
+              }
           ),
           ListTile(
-            title: Text('Year'),
-            onTap: () => _selectItem('Year'),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Year'),
+                  _isYear ?
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Icon(CustomIcons.nike,
+                      size: 16,
+                      color: new Color(0xFFFF6A89),
+                    ),
+                  ) : SizedBox(),
+                ]
+              ),
+              onTap: () {
+                setState(() {
+                  _isToday = false;
+                  _isWeek = false;
+                  _isMonth = false;
+                  _isYear = true;
+                });
+                _selectItem('Year');
+              }
           ),
         ],
       );

@@ -29,4 +29,5 @@ class CustomIcons {
   static const IconData disclosure = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData privacy = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData group = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData nike = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
