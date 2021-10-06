@@ -19,7 +19,10 @@ class PaymentPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => HomePage()),
+                    ),
                     icon: Icon(CustomIcons.cross_icon),
                   ),
                   GestureDetector(

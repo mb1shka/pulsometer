@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:heart_rate/domain/shared_preferences/my_shared_preferences.dart';
 import 'package:heart_rate/presentation/pages_and_screens/home_page.dart';
+import 'package:heart_rate/presentation/pages_and_screens/payment_page.dart';
 
 import '../../custom_icons.dart';
 
@@ -23,6 +24,20 @@ class IntroHome extends StatefulWidget {
 }
 
 class _IntroHomeState extends State<IntroHome> {
+
+  /*@override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) =>
+                PaymentPage()),
+      );
+    });
+  }*/
+
   @override
   Widget build(BuildContext context) {
     /*return Expanded(
@@ -109,7 +124,7 @@ class _IntroHomeState extends State<IntroHome> {
           ),
           SizedBox(height: 24),
           Center(
-            child: Text('The Heart Rate Monitor app is no intended \n '
+            child: Text('The Heart Rate Monitor app is not intended \n '
                 'for medical purposes. \n'
                 'All Data is provided for informational \n'
                 'purposes only.',
@@ -134,7 +149,7 @@ class _IntroHomeState extends State<IntroHome> {
               MySharedPreferences.instance.setBooleanValue('isFirstRun', true);
 
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (_) => HomePage()));
+                  context, MaterialPageRoute(builder: (_) => PaymentPage()));
             },
             child: Text(
               'Got it',

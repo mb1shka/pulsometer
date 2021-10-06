@@ -44,7 +44,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
   bool _toRestart = false;
 
   late Timer _timer;
-  int _start = 60;
+  int _start = 15;
 
   /// Toggles between play and pause animation states
   void _togglePlay() =>

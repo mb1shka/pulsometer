@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     SettingsPage(),
   ];
 
-  @override
+  /*@override
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
                 PaymentPage()),
       );
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heart_rate/presentation/pages_and_screens/home_page.dart';
 import 'package:heart_rate/presentation/pages_and_screens/intro_screen.dart';
 import 'package:heart_rate/domain/shared_preferences/my_shared_preferences.dart';
+import 'package:heart_rate/presentation/pages_and_screens/payment_page.dart';
 import 'package:heart_rate/presentation/pages_and_screens/statistics_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,8 +48,8 @@ class MyAppState extends State<MyApp> {
       // debugShowCheckedModeBanner: false,
       //TODO: to know, what IS it
       title: 'Heart rate app',
-      // home: isFirstRun ? HomePage() : IntroScreen(),
-      home: HomePage(),
+      home: isFirstRun ? PaymentPage() : IntroScreen(),
+      //home: HomePage(),
 
       //),
     );
