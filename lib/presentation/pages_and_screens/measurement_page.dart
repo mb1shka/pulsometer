@@ -141,7 +141,8 @@ class _MeasurementPageState extends State<MeasurementPage> {
                               children: [
                                 Expanded(child: SizedBox()),
                                 Text(
-                                  '$currentValue',
+                                  //'$currentValue',
+                                  '$middleValue',
                                   style: TextStyle(
                                     color: new Color(0xFFFF6A89),
                                     fontSize: 48,
@@ -294,8 +295,6 @@ class _MeasurementPageState extends State<MeasurementPage> {
                                       if (_start == 0) {
                                         _togglePlay();
                                         setState(() {
-                                          middleValue =
-                                              _heartRateCalculator.calculate();
                                           _heartRateCalculator.cleanList();
                                           timer.cancel();
                                           isBPMEnabled = false;
@@ -314,6 +313,8 @@ class _MeasurementPageState extends State<MeasurementPage> {
                                         setState(() {
                                           _heartRateCalculator
                                               .addValue(currentValue);
+                                          middleValue =
+                                              _heartRateCalculator.calculate();
                                           _start--;
                                           btnText = "$_start sec left";
                                         });
