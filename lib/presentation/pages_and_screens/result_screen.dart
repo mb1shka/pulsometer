@@ -299,8 +299,13 @@ class _ResultScreenState extends State<ResultScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(16, 42, 16, 16),
                         child: TextField(
+                          maxLength: 140,
                           controller: _controller,
                           decoration: InputDecoration(
+                            counterStyle: TextStyle(
+                              height: double.minPositive,
+                            ),
+                            counterText: "",
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: lightPink),
                                 borderRadius:
@@ -350,7 +355,10 @@ class _ResultScreenState extends State<ResultScreen> {
                           status: status,
                           comment: comment,
                           dateTime: dateTime));
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => HomePage()),
+                      );
                     },
                   ),
                 ),

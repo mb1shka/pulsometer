@@ -19,7 +19,7 @@ flutter_native_splash:
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  image: assets/png/heart_start2.png
+  ##image: assets/png/heart_start2.png
 
   # The color_dark, background_image_dark, and image_dark are parameters that set the background
   # and image when the device is in dark mode. If they are not specified, the app will use the
@@ -32,8 +32,8 @@ flutter_native_splash:
 
   # The android, ios and web parameters can be used to disable generating a splash screen on a given
   # platform.
-  android: true
-  ios: true
+  ##android: true
+  ##ios: true
   #web: false
 
   # The position of the splash image can be set with android_gravity, ios_content_mode, and
@@ -43,13 +43,13 @@ flutter_native_splash:
   # https://developer.android.com/reference/android/view/Gravity): bottom, center,
   # center_horizontal, center_vertical, clip_horizontal, clip_vertical, end, fill, fill_horizontal,
   # fill_vertical, left, right, start, or top.
-  android_gravity: center
+  ##android_gravity: center
   #
   # ios_content_mode can be one of the following iOS UIView.ContentMode (see
   # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill,
   # scaleAspectFit, scaleAspectFill, center, top, bottom, left, right, topLeft, topRight,
   # bottomLeft, or bottomRight.
-  ios_content_mode: center
+  ##ios_content_mode: center
   #
   # web_image_mode can be one of the following modes: center, contain, stretch, and cover.
   #web_image_mode: center

@@ -13,6 +13,7 @@ import 'package:heart_rate/presentation/widgets/custom_dialog_box.dart';
 import 'package:heart_rate/presentation/widgets/measurement_start_position.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:heart_rate/presentation/widgets/custom_dialog_box.dart';
+import 'package:heart_rate/presentation/widgets/warning_dialog_box.dart';
 
 import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
@@ -71,6 +72,45 @@ class _MeasurementPageState extends State<MeasurementPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool areSecondsCheckable(int second) {
+      if (second == 2 ||
+          second == 6 ||
+          second == 10 ||
+          second == 13) {
+        return true;
+      } else
+        return false;
+    }
+
+    bool valueIsNull(int currentValue) {
+      if (currentValue == 0) {
+        return true;
+      } else
+        return false;
+    }
+
+    void checkFinger(int second, int currentValue) {
+      if (areSecondsCheckable(second) == true) {
+        if (valueIsNull(currentValue) == true) {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return WarningDialogBox();
+              });
+        }
+      }
+    }
+
+    void checkFingerInTheEnd(int middleValue) {
+      if (middleValue < 55 || middleValue > 110) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return WarningDialogBox();
+            });
+      }
+    }
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -293,6 +333,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
                                     oneSec,
                                     (Timer timer) {
                                       if (_start == 0) {
+                                        checkFingerInTheEnd(middleValue);
                                         _togglePlay();
                                         setState(() {
                                           _heartRateCalculator.cleanList();
@@ -308,6 +349,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
                                           //_measurementCancel();
                                         });
                                       } else {
+                                        checkFinger(_start, currentValue);
                                         btnTextColor =
                                             Color.fromRGBO(255, 106, 137, 1);
                                         setState(() {
@@ -367,35 +409,5 @@ class _MeasurementPageState extends State<MeasurementPage> {
         ),
       ),
     );
-    /*return SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.black,
-          body: Center(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: MeasurementStart(),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                      child: Text("Press here to start"),
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                    shadowColor: MaterialStateProperty.all<Color>(Colors.deepPurple),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.black),
-                      ),
-                    ),
-                  ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-    );*/
   }
 }
