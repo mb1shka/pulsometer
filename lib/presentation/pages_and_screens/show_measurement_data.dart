@@ -25,6 +25,11 @@ class ShowMeasurementData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    double width = MediaQuery.of(context).size.width - 32;
+    
+    
+    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -159,8 +164,43 @@ class ShowMeasurementData extends StatelessWidget {
           ],
         ),
         SizedBox(height: 16),
-        Stack(
-          children: [
+        Container(
+          width: double.infinity,
+          margin: EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(255, 241, 243, 1),
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 6),
+                child: Text(
+                  'Comment',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+                child: Text(
+                  '$comment',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: new Color(0xFFFF6A89),
+                    fontSize: 17,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        /*Stack(
+          children: [*//*
+            Expanded(child: SizedBox(width: 16,),),*//*
             CustomPaint(
               size: Size(MediaQuery.of(context).size.width - 32, 75),
               painter: ChipPainter(),
@@ -192,7 +232,7 @@ class ShowMeasurementData extends StatelessWidget {
               ],
             ),
           ],
-        ),
+        ),*/
       ]),
     );
   }

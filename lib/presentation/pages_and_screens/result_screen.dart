@@ -299,9 +299,13 @@ class _ResultScreenState extends State<ResultScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(16, 42, 16, 16),
                         child: TextField(
+                          onChanged: (_) => setState(() {
+
+                          }),
                           maxLength: 140,
                           controller: _controller,
                           decoration: InputDecoration(
+                            suffixText: (140 - _controller.text.length).toString(),
                             counterStyle: TextStyle(
                               height: double.minPositive,
                             ),

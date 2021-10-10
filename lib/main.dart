@@ -1,5 +1,6 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:heart_rate/presentation/pages_and_screens/home_page.dart';
 import 'package:heart_rate/presentation/pages_and_screens/intro_screen.dart';
 import 'package:heart_rate/domain/shared_preferences/my_shared_preferences.dart';
@@ -17,6 +18,11 @@ SharedPreferences prefs;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   runApp(MyApp());
 }

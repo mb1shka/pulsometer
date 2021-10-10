@@ -45,7 +45,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
   bool _toRestart = false;
 
   late Timer _timer;
-  int _start = 15;
+  int _start = 25;
 
   /// Toggles between play and pause animation states
   void _togglePlay() =>
@@ -76,7 +76,10 @@ class _MeasurementPageState extends State<MeasurementPage> {
       if (second == 2 ||
           second == 6 ||
           second == 10 ||
-          second == 13) {
+          second == 13 ||
+          second == 16 ||
+          second == 19 ||
+          second == 21) {
         return true;
       } else
         return false;
@@ -102,7 +105,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
     }
 
     void checkFingerInTheEnd(int middleValue) {
-      if (middleValue < 55 || middleValue > 110) {
+      if (middleValue < 50 || middleValue > 100) {
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -389,21 +392,10 @@ class _MeasurementPageState extends State<MeasurementPage> {
                         style: ElevatedButton.styleFrom(
                           primary: Color.fromRGBO(255, 255, 255, 1),
                           elevation: 0,
-                          /*fixedSize: Size(224, 46),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24.0),
-                    ),*/
                         ),
                       ),
                     )
                   : SizedBox(),
-              /*Center(
-                child: Text('Time left: $_start'),
-              ),
-              Center(
-                //child: Text("${context.watch<HeartRateListener>().getAVGRate}"),
-                child: Text("Middle value is: $middleValue"),
-              )*/
             ],
           ),
         ),
